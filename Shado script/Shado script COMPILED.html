@@ -1,0 +1,75 @@
+<html>
+    <head>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/animationHandler.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/eventListeners.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/objects.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/mathMethods.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_JS_framework.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/framerate.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/loadingAnimation.js"></script>
+
+            <script src="Data/main.js"></script>
+    </head>
+    <body>
+<script>
+    createCanvas(window.innerWidth, window.innerHeight);
+
+    function render()   {
+
+        compile("draw a circle at (50,50) where radius = 50");
+        compile("draw a rectangle at (50,50) where width = 50 and height = 50");
+
+    }
+</script>
+ <style> 
+ÿþ
+
+ </style> 
+ 
+
+ <script> 
+/**
+ * 
+ * @param {string} code Inserts Shado script code to be converted to JavaScript
+ */
+
+
+function compile(code)  {
+
+    code = code.split(" ");
+
+    let data = {};
+    let cmd;
+
+    for (let i = 0; i < code.length; i++)   {
+        if (code[i].toLowerCase == "circle")    {
+            let radius = code[code.length - 1];
+            let x = code[4].split("")[1];
+            let y = code[4].split("")[3];
+            data.shape = "Circle";
+            data.x = x;
+            data.y = y;
+            data.radius = radius;
+            cmd = `new ${data.shape}(${data.x}, ${data.y}, ${data.radius}).draw()`;
+        } else  if (code[i].toLowerCase == "rectangle")    {
+            let height = code[code.length - 1];
+            let width = code[code.length - 5];
+            let x = code[4].split("")[1];
+            let y = code[4].split("")[3];
+            data.shape = "Circle";
+            data.x = x;
+            data.y = y;
+            data.width = width
+            data.height = height;
+            cmd = `new ${data.shape}(${data.x}, ${data.y}, ${data.width}, ${data.height}).draw()`;
+        }  
+    }
+
+        console.log(cmd);
+    eval(cmd);
+}
+
+ </script> 
+ 
+	</body> 
+</html>

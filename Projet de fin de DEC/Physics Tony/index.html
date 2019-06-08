@@ -1,0 +1,350 @@
+<html>
+   <head>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="Scripts/checkButton.css">
+		<script src="Scripts/p5.js"></script>
+		<script src="https://rawgit.com/diwi/p5.EasyCam/master/p5.easycam.js"></script>
+				
+			
+		<script src="Scripts/camera.js"></script>
+		<script src="Scripts/classes.js"></script>
+		<script src="Scripts/rocket_simulation.js"></script>	
+		<script src="Scripts/animation.js"></script>
+<style>
+
+	body	{
+		margin: 0;
+	}
+
+	#window	{
+		position: fixed;
+		top: 20%;
+		left: 25%;
+		background-color: white;
+		width: 50%;
+		height: 60%;
+		border-radius: 10px;
+		font-family: "Arial";
+		border: solid #2196F3 4px;
+		display: none;
+	}
+
+	.title_bar	{
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		padding: 10px;
+		height: 5%;
+		width: 98%;
+		font-size: 18pt;
+		font-weight: bold;
+		background-color: #2196F3;
+		color: white;
+
+	}
+
+	.close_btn	{
+		position: absolute;
+		top: 0px;
+		left: 95%;
+		border-radius: 0px 10px 0px 0px;
+		text-align: center;
+		height: 5%;
+		width: 3%;
+		padding: 10px;
+		font-size: 18pt;
+		font-weight: bold;
+		color: white;
+		background-color: rgb(192, 17, 31);
+		cursor: pointer;	
+	}
+
+	.window_body	{
+		font-size: 16pt;
+		color: black;
+		padding: 20px;
+		position: absolute;
+		top: 5%;
+		width: 95%;
+		max-height: 80%;
+		overflow: auto;
+	}
+
+	.window_body fieldset	{		
+		border-radius: 10px;
+	}
+
+	table tr td	{
+		padding: 10px;
+	}
+
+	.pauseButton	{
+		padding: 10px;
+		font-size: 12pt;
+		color: white;
+		background-color: #2196F3;
+		border-radius: 8px;
+		border-width: 0px;
+		font-weight: bold;
+	}
+
+	.smallInput	{
+		padding: 10px;
+    	font-size: 16px;
+   	 	width: 60px;
+    	border-radius: 5px;
+		text-align: center;
+	}
+
+	#chronometer	{
+		position: absolute;
+		left: 7%;
+		top: 2%;
+		color: white;
+		font-size: 48pt;
+		font-family: "Arial";
+	}
+
+	#play_pause_image	{
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		opacity: .5;
+		z-index: 2;
+	}
+
+</style>
+  </head>
+  <body>
+		<div id="window">
+			<div class="title_bar">
+				Settings
+			</div>
+			<div class="close_btn" OnClick="document.getElementById('window').style.display = 'none';">
+				X
+			</div>
+			<div class="window_body">
+				<fieldset>
+					<legend><h2>Settings</h2></legend>
+					<table>
+						<tr>
+							<td>
+								Pause/play simulation:
+							</td>
+							<td>
+								<input class="pauseButton" id="pause_play" type="button" value="Pause" onclick="pauseSim();" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Start rocket simulation:
+							</td>
+							<td>
+								<input class="pauseButton" type="button" value="Start" onclick="initRocketSim(); this.value = 'Simulation started';" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Simulation speed:
+							</td>
+							<td>
+								<input id="tonyRange" type="range" title="Change simulation speed" min="1000" max="3.154E7" value="1" class="range" OnChange="dt = Number(this.value / 60); document.getElementById('dtValue').innerHTML = Math.floor(this.value); document.getElementById('tonyInput').value = Math.floor(this.value);" />
+							</td>
+							<td>
+								<input id="tonyInput" type="number" title="Change simulation speed" value="1000" OnChange="dt = Number(this.value / 60); document.getElementById('dtValue').innerHTML = Math.floor(this.value); document.getElementById('tonyRange').value = Math.floor(this.value);" />
+							</td>
+							<td>
+								Current <i>dt</i>: 1 real second = <span id="dtValue">1000</span> seconds in simulation
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Enable shadow:
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.enableShadow')"  disabled="disabled" />
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+				<fieldset>
+					<legend><h2>Camera settings</h2></legend>
+					<table>
+						<tr>
+							<td>
+								Auto directed camera:
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.directedCamera')"  />
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Lock camera on rocket:
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.lockCamera')"  />
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Lock camera on a planet
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.lockCameraOnPlanet')"  />
+									<span class="slider round"></span>
+								</label>
+							</td>
+							<td>
+								<select id="planetLockOn" onchange="settings.lockCamIndex = this.value">
+									<option value="0">Mercure</option>
+									<option value="1">Venus</option>
+									<option value="2">Terre</option>
+									<option value="3">Mars</option>
+									<option value="4">Jupiter</option>
+									<option value="5">Saturne</option>
+									<option value="6">Uranus</option>
+									<option value="7">Neptune</option>
+									<option value="8">Pluto</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+				<br />
+				<fieldset>
+					<legend><h2>Planets settings</h2></legend>
+					<table>
+						<tr>
+							<td>
+								Show textures:
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.showTextures')" />
+									<span class="slider round"></span>
+								</label>
+							</td>
+							<td>
+								<span style="color: red; font-style: italic;">JP SVP ne pas toucher à ça</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Show orbits:
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.showOrbits')" checked="checked" />
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Orbit line width:
+							</td>
+							<td>
+								<input type="range" title="Orbit line width" min="1" max="100" value="10" class="range" OnChange="settings.orbitWidth = Number(this.value); document.getElementById('orbitWidthvalue').innerHTML = this.value" />
+							</td>
+							<td>
+								Current width: <span id="orbitWidthvalue">10</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Show planets names:
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.showNames')" disabled />
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Planets size multiplier:
+							</td>
+							<td>
+								<input type="range" title="Planets size multiplier" min="1" max="100" value="1" class="range" OnChange="settings.radiusMult = Number(this.value); document.getElementById('planetSizeMult').innerHTML = this.value" />
+							</td>
+							<td>
+								Current size: <span id="planetSizeMult">1</span>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+				<br />
+				<fieldset>
+					<legend><h2>Environment settings</h2></legend>
+					<table>
+						<tr>
+							<td>
+								Show stars:
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.showStars')" />
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Show rocket simulation:
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.showRocket')" checked="checked" />
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>						
+						<tr>
+							<td>
+								Rocket size scale:
+							</td>
+							<td>
+								<input type="range" title="Change rocket size" min="15" max="500" value="15" class="range" OnChange="settings.rocketScale = Number(this.value / 100); document.getElementById('rocketSizeValue').innerHTML = this.value;" />
+							</td>
+							<td>
+								Current <i>scaling</i>: <span id="rocketSizeValue">0.15</span>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+				<br />
+				<fieldset>
+					<legend><h2>Advanced settings</h2></legend>
+					<table>
+						<tr>
+							<td>
+								Settings menu hoykey:
+							</td>
+							<td>
+								<input type="text" class="smallInput" value="S" maxlength="1" style="text-transform: uppercase;" OnChange="settings.hotkey = this.value" />
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+			</div>
+		</div>
+		<div id="chronometer">
+			0:00
+		</div>
+		<div class="hud">
+			<img src="data/pause.png" id="play_pause_image" width="75" height="75" OnClick="pauseSim();" />
+		</div>
+	</body>
+</html>

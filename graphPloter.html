@@ -1,0 +1,53 @@
+<html>
+     <head>
+     </head>
+     <body style="margin: 0">
+          <canvas></canvas>
+<script>
+let canvas = document.querySelector("canvas");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let c = canvas.getContext("2d");
+
+c.translate(canvas.width / 2, canvas.height / 2);
+
+let equation = "0.01 * x * x ";
+
+function plot()     {
+     c.lineWidth = 2;
+     c.strokeStyle = "red";
+     c.beginPath();
+     c.moveTo(0, 0);
+     for (let x = 0; x < 1000; x += 0.01)     {
+          c.lineTo(x, -eval(equation));
+     }
+     c.stroke();
+
+     c.beginPath();
+     c.moveTo(0, 0);
+     for (let x = 0; x < 1000; x += 0.01)     {
+          c.lineTo(-x, eval(equation));
+     }
+     c.stroke();
+}
+
+function axes()     {
+     // x
+     c.lineWidth = 5;
+
+     c.beginPath();
+     c.moveTo(-canvas.width / 2, 0);
+     c.lineTo(canvas.width / 2, 0);
+     c.stroke();
+
+     c.beginPath();
+     c.moveTo(0, -canvas.height / 2);
+     c.lineTo(0, canvas.height / 2);
+     c.stroke();
+}
+axes();
+
+plot();
+</script>
+     </body>
+</html>

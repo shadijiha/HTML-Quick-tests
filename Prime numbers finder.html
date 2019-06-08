@@ -1,0 +1,180 @@
+<html>
+	<head>
+		<title></title>
+<style>
+@font-face {
+	font-family: WalkwayExpand;
+	src: url('walkway/WalkwayExpand.ttf');
+}
+@font-face {
+	font-family: Walkway;
+	src: url('walkway/WalkwayBlack.ttf');
+}
+body	{
+	margin: 0;
+}
+td	{
+	padding: 10px;
+}
+.black_theme	{
+	color: white;
+	background: black;
+}
+.top	{
+	margin: 0;
+	padding: 50px;
+	text-align: center;
+	font-size: .6in;
+	text-transform: uppercase;
+	font-family: "WalkwayExpand";
+	font-weight: bold;
+	color: white;
+	background-color: rgb(51, 51, 51);
+}
+.title	{
+	font-family: "WalkwayExpand";
+	font-size: .5in;
+	font-weight: bold;
+}
+#content	{
+	margin-left: 10%;
+	margin-top: 5%;
+	padding: 20px;
+}
+input[type=number]	{
+	width: 500px;
+	font-size: .25in;
+	height: 100px;
+	border-radius: 50px;
+	padding: 20px;
+	font-family: "WalkwayExpand";
+	font-weight: bold;
+	transition: padding 1s, font-size 1s;
+}
+input[type=number]:focus, input[type=number]:hover	{
+	padding-left: 50px;
+	font-size: .35in;
+}
+input[type=button]	{
+	width: 250px;
+	font-size: .35in;
+	height: 100px;
+	border: solid rgb(51, 51, 51) 3px;
+	border-radius: 50px;
+	padding: 20px;
+	font-family: "Walkway";
+	font-weight: bold;
+	background: transparent;
+	transition: background 1s, border 1s;
+}
+input[type=button]:hover	{
+	border: solid white 3px;
+	background: rgb(51, 51, 51);
+	color: white;
+}
+tr:nth-child(odd)	{
+	background-color: rgb(200, 200, 200);
+}
+th, td	{
+	font-size: .25in;
+	font-family: "WalkwayExpand";
+	padding: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+th	{
+	background: rgb(51, 51, 51);
+	color: white;
+	border: solid rgb(51, 51, 51) 2px;
+	border-radius: 10px;
+}
+#log	{
+	font-size: 28px;
+	font-family: "Walkway";
+}
+#log	span	{
+	font-size: .33in;
+	font-family: "WalkwayExpand";
+	font-weight: bold;
+}
+#error	{
+	color: red;
+	font-size: .33in;
+	font-family: "WalkwayExpand";
+	padding: 20px;
+	font-weight: bold;
+}
+#num_log	{
+	position: absolute;
+	left: 1300px;
+	top: 200px;
+}
+</style>
+	</head>
+	<body>
+		<div class="top">
+			Shado statistics
+		</div>
+		<div id="content">
+			<p class="title">
+				Shado prime numbers finder
+			</p>
+			<input type="number" placeholder="Max number" id="num" />
+			<input type="button" value="Collect" onclick="generatePrimeNumbers(document.getElementById('num').value);"/>
+			<br />
+			<br />
+			<div id="error">
+
+			</div>
+			<br />
+			<br />
+			<table>
+				<tbody>
+					<tr>
+						<th>Statistic</th>
+						<th>Tries</th>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<br />
+			<div id="log">
+				<span>Log:</span>
+				<br />
+			</div>
+		</div>
+<script>
+function generatePrimeNumbers(maxNumber)    {
+
+	maxNumber =  Number(maxNumber);
+
+     let numbers = [];
+     for (let i = maxNumber; i >= 0; i--) {
+          numbers = [...numbers, i];
+     }
+
+     let primeNumbers = [2,3,5,7];
+
+     for (let i = 0; i < 10; i++)  {
+          for (let j = 0; j < numbers.length; j++)   {
+               if (numbers[j] % i == 0)     {
+                    numbers.splice(j, 1);
+                    continue;
+               }
+          }
+     }
+
+     numbers = numbers.reverse();
+     numbers.splice(0, 1);
+
+    	numbers = [...primeNumbers, ...numbers];
+     console.log(numbers.length);
+
+     for (let number of numbers)   {
+          document.getElementById("log").innerHTML += `${number} <br />`;
+     }
+
+}
+</script>
+	</body>
+</html>

@@ -1,0 +1,12 @@
+body {
+  font: 100% Helvetica,sans-serif;
+  color: #333;
+}
+
+div.class	{
+	color: rgba(0,1,255);
+}
+
+p#bg	{
+	background-image: url('hehexd.ico');
+}

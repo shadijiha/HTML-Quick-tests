@@ -1,0 +1,314 @@
+﻿<html> 
+	<head> 
+		<title>Patch 1.5</title> 
+		<link rel="stylesheet" type="text/css" href="../Data/CSS/styles.css"> 
+	</head> 
+	<body id="patch_body">
+
+		<h1>
+			<a href="1.8.html" title="Previous patch"><</a>
+			Welcome to patch 1.9!
+			<a href="1.10.html" title="Next patch">></a>
+		</h1>
+		
+		<small>Release 13/03/2019 1:40:18 AM</small>
+		<br />
+		<br />
+		<br />
+		<fieldset>
+				<legend>
+					<span class="new float-left">new</span>				
+					<h2>Lithality</h2>
+				</legend>
+				<br />
+			Lithality is a flat amount of armor penetration <img title="Armor penetration icon" src="../Data/Images/armorPen.png" />  that will be ignored from the target's armor when attacking it. <b>Note</b>: the percentage armor penetration applies before the flat armor penetration
+			<br />
+			<br />			
+			For example if a the attacker has 100 AD, 20 lithality and the defender has 50 armor, the damage dealth will be 76.9 instead of 66.6.
+			However, if the attacker has 20 | 15% lithality, the damage dealth will be instead 81.6 of 70.1 (because the target armor has been reduced to: 50 - 15% = 42.5 → 42.5 - 20 = 22.5)
+			
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="updated float-left">updated</span>
+					<img src="../Data/Images/player.png" width="50" height="100" />								
+					<h2>Player</h2>
+				</legend>
+				The game was too slow after basic attack restections (in 1.8) and base armor buffs (in 1.7). We are giving players and monsters some early damage.
+			<br />
+			<br />
+			<table>
+				<tr>
+					<th>
+						Player & monster base attack damage
+					</th>
+					<td>
+						<span class="new float-left small">new</span>
+						AD groth now applies at level 1 (from level 2)
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Player & monster armor
+					</th>
+					<td>
+						<span class="new float-left small">new</span>
+						Armor can no longer be reduced below 0
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Player & monster base armor penetration
+					</th>
+					<td>
+						<s>0 | 0</s>
+					</td>
+					<td>
+						0 | 15%
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Player & monster base critical strike chance
+					</th>
+					<td>
+						<s>0%</s>
+					</td>
+					<td>
+						5%
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Monster base attack speed
+					</th>
+					<td>
+						<s>4</s>
+					</td>
+					<td>
+						3
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Player attack speed formula
+					</th>
+					<td>
+						<s>attack speed × 500</s>
+					</td>
+					<td>
+						attack speed × 1000
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Player base attack speed
+					</th>
+					<td>
+						<s>2</s>
+					</td>
+					<td>
+						1
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+					<td>
+						<span class="new float-left small">new effect</span>
+						Player and monster attack speed is now <br /> capped at 0.4 (2.5 attacks/seconds)
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Player base mouvement speed
+					</th>
+					<td>
+						<s>25</s>
+					</td>
+					<td>
+						15
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+		<br />
+		<fieldset>
+			<legend><span class="updated float-left">updated</span> <img src="../Data/Images/Critical_strike_chance.png" width="64" height="64" /> <h2>Critical strike items</h2></legend>
+			<table>
+				<tr>
+					<th >
+						<img src="../Data/Images/Statikk_Shiv_item.png" width="25" height="25" class="rounded" /> Statikk Shiv
+					</th>
+					<td>
+						<s>30%</s>
+					</td>
+					<td>
+						20%
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<img src="../Data/Images/Runaan_s_Hurricane_item.png" width="25" height="25" class="rounded" /> Runaan's Hurricane
+					</th>
+					<td>
+						<s>30%</s>
+					</td>
+					<td>
+						20%
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<img src="../Data/Images/Rapid_Firecannon_item.png" width="25" height="25" class="rounded" /> Rapid fire canon
+					</th>
+					<td>
+						<s>25%</s>
+					</td>
+					<td>
+						20%
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<img src="../Data/Images/Phantom_Dancer_item.png" width="25" height="25" class="rounded" /> Phantom dancer
+					</th>
+					<td>
+						<s>30%</s>
+					</td>
+					<td>
+						20%
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<img src="../Data/Images/Infinity_Edge_item.png" width="25" height="25" class="rounded" /> Infinity Edge
+					</th>
+					<td>
+						<s>25%</s>
+					</td>
+					<td>
+						20%
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<img src="../Data/Images/Essence_Reaver_item.png" width="25" height="25" class="rounded" /> Essence reaver
+					</th>
+					<td>
+						<s>25%</s>
+					</td>
+					<td>
+						20%
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="new float-left">new</span>
+					<img class="rounded" src="../Data/Images/Youmuu_s_Ghostblade_item.png" width="64" height="64" />		
+					<h2>Youmuu's Ghostblade</h2>
+				</legend>
+			<br />
+			<span class="new float-left small">new</span>
+				UNIQUE PASSIVE: Grants +55 attack damage and +18 lithality
+			<br />
+			<br />
+			<span class="new float-left small">new</span>
+				UNIQUE PASSIVE - <b>Swift</b>: Grants +5 movement speed
+			<br />
+			<br />
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="new float-left">new</span>
+					<img class="rounded" src="../Data/Images/Duskblade_of_Draktharr_item.png" width="64" height="64" />		
+					<h2>Duskblade of Draktharr</h2>
+				</legend>
+			<br />
+			<span class="new float-left small">new</span>
+				UNIQUE PASSIVE: Grants +60 attack damage and +21 lithality
+			<br />
+			<br />
+			<span class="new float-left small">new</span>
+				UNIQUE PASSIVE - <b>Nightmare</b>: Every (7 * attack speed) seconds, your next basic attack will deal 10 + <orange>60%AD</orange> bonus damage
+			<br />
+			<br />
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<img class="rounded" src="../Data/Images/Berserker_s_Greaves_item.png" width="64" height="64" />		
+					<h2>Berserker's Greaves</h2>
+				</legend>
+			<br />
+			<span class="new float-left small">new</span>
+				Berserker's Greaves UNIQUE PASSIVE is now named <b>Swift</b>
+			<br />
+			<br />
+			<table>
+				<tr>
+					<th >
+						Mouvement speed granted
+					</th>
+					<td>
+						<s>20</s>
+					</td>
+					<td>
+						10
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<img class="rounded" src="../Data/Images/Statikk_Shiv_item.png" width="64" height="64" />		
+					<h2>Statikk Shiv</h2>
+				</legend>
+			<br />
+			<span class="removed float-left small">removed</span>
+				Statikk Shiv on-hit true damage no longer critical strikes
+			<br />
+			<br />
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<img class="rounded" src="../Data/Images/Runaan_s_Hurricane_item.png" width="64" height="64" />		
+					<h2>Runaan's Hurricane</h2>
+				</legend>
+			<br />
+			<span class="new float-left small">new effect</span>
+				Cooldown now scales with attack speed (formula: 5 * attack speed * 1.66)
+			<br />
+			<br />
+		</fieldset>
+		<br />
+		<fieldset>
+			<legend><h2>Bug fixes and other changes</h2></legend>
+			<ul>
+				<li>
+					<span class="new float-left small">new</span>
+					You can now view more stats by holding the "C" key.
+				</li>
+				<br />
+				<li>
+					<span class="new float-left small">new</span>
+					Monsters no longer shoot when the game is over
+				</li>
+				<br />
+				<li>
+					<span class="new float-left small">new</span>
+					Description when hovering on the owned items slots now updates depending on the selected HUD (Not only for player)
+				</li>
+				<br />				
+			</ul>
+		</fieldset>
+
+	</body> 
+</html>

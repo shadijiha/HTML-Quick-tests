@@ -1,0 +1,213 @@
+/***  
+ * CSS main file for "Game test" project 
+ * 
+ * 
+ */
+
+#console	{
+	max-height: 650px;
+	max-width: 1050px;
+	overflow: auto;
+}
+
+#console fieldset	{
+	width: 90%;
+	padding: 15px;
+}
+
+#console input[type=text]	{
+	width: 100px;
+}
+
+.emote	{
+	vertical-align: middle;
+}
+
+#chat	{
+	position: fixed;
+	top: 400px;
+	left: 100px;
+	font-family: "Arial";
+	font-size: 18px;
+	background: transparent;
+	width: 300px;
+	height: 250px;
+	max-height: 250px!important;
+	overflow: hidden;
+}
+
+#chatInput	{
+	position: fixed;
+	top: 660px;
+	left: 100px;
+	width: 300px;
+	display: none;
+
+}
+
+.enemy	{
+	color: red;
+	font-weight: bold;
+}
+
+.ally	{
+	color: blue;
+	font-weight: bold;
+}
+ 
+input[type=number], input[type=text]	{
+	padding: 10px;
+	font-size: 16px;
+	width: 60px;
+	border-radius: 5px;
+}
+
+.modern	{
+	padding: 10px;
+	border-radius: 10px;
+	font-size: 12pt;
+}
+
+#description	{
+	position: fixed;
+	text-align: justify;
+	width: 200px;
+	color: white;
+	background-color: rgba(0, 0, 0, .7);
+	display: none;
+	font-family: "Arial";
+	padding: 15px;
+	min-height: 90px;
+}
+ 
+.item_description	{
+	position: absolute;
+	font-size: 16px;
+	width: 325;
+	text-align: justify;
+}
+
+.shop_button	{
+	position: absolute;
+	font-size: 30px;
+	width: 140px;
+	height: 40px;
+	background-color: rgba(18, 18, 18, 1);
+	border-radius: 5px;
+	border: solid rgba(18, 18, 18, 1) 1px;
+	color: white;
+}
+
+.shop_button:disabled	{
+	opacity: 0.2;
+	cursor: unavailable
+}
+
+green	{
+	color: green;
+	font-weight: bold;
+}
+
+orange	{
+	color: orange;
+	font-weight: bold;
+}
+
+purple	{
+	color: purple;
+	font-weight: bold;
+}
+
+blue	{
+	color: blue;
+	font-weight: bold;
+}
+
+red	{
+	color: red;
+	font-weight: bold;
+}
+
+fieldset	{
+	text-align: justify;
+}
+
+#patch_body, #settings, #console {
+    margin: 20px;
+    font-family: "Gill Sans W04", GillSans, "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+ 
+th	{
+    text-align: left;
+}
+
+td, th  {
+    padding: 5px;
+}
+
+s  {
+    color: grey;
+}
+
+fieldset    {
+    border-radius: 10px;
+}
+
+fieldset img    {
+	vertical-align: middle;
+}
+
+img.rounded	{
+	border-radius: 50px;
+}
+
+h2  {
+    display: inline;
+}
+
+iframe#patchnotes   {
+    display: none;
+    position: absolute;
+    left: 400;
+    top: 200;
+    width: 1100;
+    height: 600;
+}
+
+.float-left {
+    /*float: left;*/
+    font-size: 1.1em;
+    text-transform: uppercase;
+    vertical-align: top;
+    font-family: "Gill Sans W04",GillSans,"Gill Sans","Gill Sans MT",Calibri,"Trebuchet MS",sans-serif;
+    margin-right: 3px;
+    line-height: 1.0em;
+    padding: 6px;
+    border-radius: 8px;
+}
+
+.small	{
+	font-size: 0.7em!important;
+}
+
+.updated {
+	vertical-align: middle;
+    background-color: #5e3dc6;
+    color: #f8f8f8;
+    border-radius: 4px;
+}
+
+.new {
+	vertical-align: middle;
+    background-color: #74864c;
+    color: #f8f8f8;
+    border-radius: 4px;
+}
+
+.removed {
+	vertical-align: middle;
+    background-color: #A05757;
+    color: #f8f8f8;
+    border-radius: 4px;
+}

@@ -1,0 +1,82 @@
+/*** 
+ * 	CSS main file for "Shado Paint" project 
+ * 
+ * 
+ */ 
+ 
+ 
+     body {
+          font-family: "Arial";
+          font-size: 12px;
+          margin: 0;
+     }
+     canvas    {
+          background-size: cover;
+     }
+     .ui   {
+          background-color: rgba(151, 151, 151, 0.5);
+          position: absolute;
+          left: 20;
+          top: 20;
+          border: solid gray 1px;
+          border-radius: 10px;
+          width: 100px;
+          height: 550px;
+     }
+     .colors   {
+          position: absolute;
+          left: 10px;
+          top: 10px;
+     }
+     .box {
+          width: 40px;
+          height: 40px;
+          border-radius: 20px;
+          color: transparent;
+          cursor: pointer;
+          display: inline-block;
+     }
+     .green    {
+          background-color: green;
+     }
+     .lightgreen    {
+          background-color: lightgreen;
+     }
+     .blue    {
+          background-color: blue;
+     }
+     .lightblue    {
+          background-color: lightblue;
+     }
+     .red    {
+          background-color: red;
+     }
+     .pink    {
+          background-color: pink;
+     }
+     .orange    {
+          background-color: orange;
+     }
+     .yellow    {
+          background-color: yellow;
+     }
+     .black    {
+          background-color: black;
+     }
+     .white    {
+          background-color: white;
+     }
+     input[type=number],input[type=text]     {
+          width: 80%;
+          height: 30px;
+          border-radius: 10px;
+          font-size: 16px;
+          text-align: center;
+     }
+     /*.settings {
+          border-radius: 25px;
+          background-color: white;
+          width: 50px;
+          height: 50px;
+          text-align: center;
+     }*/

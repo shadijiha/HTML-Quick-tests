@@ -1,0 +1,88 @@
+/***  
+ * CSS main file for "Root" project 
+ * 
+ * 
+ */
+
+@font-face  {
+    font-family: "proxima";
+    src: url('Fonts/Proxima-Nova.ttf');
+}
+
+@font-face  {
+    font-family: "walkway";
+    src: url('Fonts/walkway/WalkwayExpand.ttf');
+}
+ 
+ 
+body	{    
+    font-family: "walkway"!important;
+    background-size: cover!important;
+    transition: background 1s;
+}
+
+.clock  {
+    color: white;
+    font-size: 2in;
+    position: absolute;
+    left: calc(50% - 300px);
+    top: 35%;
+    font-weight: bold;
+    transition: content 1s;
+}
+
+#date   {
+    position: absolute;
+    font-size: 0.5in;
+}
+
+#logs   {
+    position: absolute;
+    left: calc(100% - 300px);
+    top: 5%;
+}
+
+input.dark  {
+    background-color: #2C3531;
+    border-radius: 50px;
+    border: solid white 3px;
+    color: white;
+    font-size: 16pt;
+    padding: 10px;
+    width: 120px;
+    cursor: pointer;
+    transition: color 1s, background 1s, border 1s;
+}
+
+input.dark:hover    {
+    color: #2C3531;
+    border-color: #2C3531;
+    background: white;
+}
+
+input.light  {
+    background-color: white;
+    border-radius: 50px;
+    border: solid #2C3531 3px;
+    color: #2C3531;
+    font-size: 16pt;
+    padding: 10px;
+    width: 120px;
+    cursor: pointer;
+    transition: color 1s, background 1s, border 1s;
+}
+
+input.light:hover    {
+    color: white;
+    border-color: white;
+    background: #2C3531;
+}
+
+#description    {
+    font-size: .75in;
+    font-weight: bold;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    display: none;
+}

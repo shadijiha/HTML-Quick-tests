@@ -1,0 +1,20 @@
+/*
+*	Main CSS file precompiler "main.shado"
+*/
+
+
+$main_font = "brandon-regular";
+$main_image = url("https://cdn-images-1.medium.com/max/2000/1*YunI3ChUVMlpmFzo75FczQ.png");
+$background = url("http://localhost/Shado%20engin%20academy/Images/street.jpg");
+
+body {
+	background-image: $background;
+	font-family: $main_font;
+	background-size: cover;
+}
+
+div.header	{
+	font-family: $main_font;
+	color: black;
+	text-transform: uppercase;
+}

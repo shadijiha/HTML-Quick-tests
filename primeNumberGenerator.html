@@ -1,0 +1,40 @@
+<html>
+     <head>
+     </head>
+     <body>
+<script>
+
+function generatePrimeNumbers(maxNumber)    {
+
+     let numbers = [];
+     for (let i = maxNumber; i >= 0; i--) {
+          numbers = [...numbers, i];
+     }
+
+     let primeNumbers = [2,3,5,7];
+
+     for (let i = 0; i < primeNumbers.length; i++)  {
+          for (let j = 0; j < numbers.length; j++)   {
+               if (numbers[j] % primeNumbers[i] == 0)     {
+                    numbers.splice(j, 1);
+                    continue;
+               }
+          }
+     }
+
+     numbers = numbers.reverse();
+     numbers.splice(0, 1);
+
+     numbers = [...primeNumbers, ...numbers];
+     console.log(numbers.length);
+
+     for (let number of numbers)   {
+          document.querySelector("body").innerHTML += `${number} <br />`;
+     }
+
+}
+
+generatePrimeNumbers(1000);
+</script>
+     </body>
+</html>

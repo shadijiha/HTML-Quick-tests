@@ -1,0 +1,262 @@
+<?php
+	session_start();
+	require_once('phpfiles/ShadoConfig.php');
+	//phpinfo();
+?>
+<html> 
+	<head> 
+		<title>Game test</title>
+		<link rel="stylesheet" type="text/css" href="Data/CSS/styles.css"> 
+		<link rel="stylesheet" type="text/css" href="Data/CSS/checkButton.css"> 
+		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/animationHandler.js"></script> 
+		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/eventListeners.js"></script> 
+		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/objects.js"></script> 
+		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/mathMethods.js"></script> 
+		<script src = "http://localhost/HTML/Main_Scripts/shado_JS_framework.js"></script> 
+	<!--<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/framerate.js"></script>-->
+		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/loadingAnimation.js"></script> 
+<script>
+const shadoName = "<?php echo $_SESSION['username'] ?>"; 
+</script>
+	</head> 
+	<body>
+		<audio id="mainAudio" src="Data/sounds/crit sound.mp3" style="display: none;"></audio>
+		<audio id="ultAudio" src="Data/sounds/Aatrox Rework Ultimate ability sound effect (World Ender).mp3" style="display: none;"></audio>
+		<script src="Data/classes.js"></script> 
+		<script src="Data/main.js"></script>
+		<script src="Data/events.js"></script>
+		<script src="Data/gold_items.js"></script>	
+		<script src="Data/items.js"></script>	
+		<script src="Data/allWindows.js"></script>
+		<script src="Data/hud.js"></script>	
+
+		<!-- auto loading levels -->
+		<?php 
+		$count = 0;
+		if ($handle = opendir('Data/Levels/.')) {
+			
+			while (false !== ($entry = readdir($handle))) {
+
+				if ($entry != "." && $entry != "..") {
+
+					if (strpos($entry, 'level') !== false && strpos($entry, 'main') === false) {
+						$count++;
+					}
+					
+				}
+			}
+			closedir($handle);
+		}
+		
+		for ($i = 1; $i <= $count; $i += 1) {
+			
+			echo '<script src="Data/Levels/level' . $i . '.js"></script>';
+			
+		}
+		
+		?>		
+		<script src="Data/levels_main_function.js"></script>
+		<script src="Data/animation.js"></script>
+ 
+		<iframe src="Patch notes/1.12.html" id="patchnotes" frameborder="0"></iframe>
+
+		<!-- Item shop -->
+		<div id="item_shop"></div>
+
+		<!-- Settings window -->
+		<div id="settings" style="position: fixed; display: none; width: 1050px;">
+			<h1>Game settings</h1>
+			<fieldset style="width: 40%;">
+				<legend><h3>Monster HUD preference</h3></legend>
+				<table>
+					<tr>
+						<td>
+							Show monsters health bars
+						</td>
+						<td>
+							<label class="switch">
+								<input type="checkbox" checked="checked" OnClick="changeSetting('settings.showMonsterHpBar')" />
+								<span class="slider round"></span>
+							</label>
+						</td>
+					</tr>
+					<tr>
+							<td>
+								Show monsters energy bars
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" checked="checked" OnClick="changeSetting('settings.showMonsterEnergyBar')" />
+									<span class="slider round"></span>
+								</label>
+							</td>
+					</tr>
+					<tr>
+							<td>
+								Show monsters range
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.showMonsterRange')" />
+									<span class="slider round"></span>
+								</label>
+							</td>
+							<td>
+								<input type="color" value="#FFA500" title="Monsters' range color"  OnChange="settings.monsterRangeColor = this.value;" />
+							</td>
+							<td>
+								<input type="range" title="Monsters' range opacity" min="0" max="100" value="5" class="range" OnChange="settings.monsterRangeOpacity = this.value / 100;" />
+							</td>
+					</tr>
+				</table>
+			</fieldset>
+			<br />
+			<fieldset style="width: 40%; position: absolute; top: 80px; left: 500px;">
+					<legend><h3>Player HUD preference</h3></legend>
+					<table>
+						<tr>
+							<td>
+								Show player's health bar
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.showPlayerHpBar')" />
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Show player's energy bar
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.showPlayerEnergyBar')" />
+									<span class="slider round"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Show player's range
+							</td>
+							<td>
+								<label class="switch">
+									<input type="checkbox" OnClick="changeSetting('settings.showPlayerRange')" />
+									<span class="slider round"></span>
+								</label>
+							</td>
+							<td>
+								<input type="color" value="#551A8B" title="Player range color"  OnChange="settings.playerRangeColor = this.value;" />
+							</td>
+							<td>
+								<input type="range" title="Player range opacity" min="0" max="100" value="5" class="range" OnChange="settings.playerRangeOpacity = this.value / 100;" />
+							</td>
+						</tr>
+					</table>
+			</fieldset>
+			<br />
+			<fieldset style="width: 40%;">
+				<legend><h3>General settings</h3></legend>
+				<table>
+					<tr>
+						<td>
+							Show full HUD
+						</td>
+						<td>
+							<label class="switch">
+								<input type="checkbox" checked="checked" OnClick="changeSetting('settings.showFullHUD')" />
+								<span class="slider round"></span>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Show framerate
+						</td>
+						<td>
+							<label class="switch">
+								<input type="checkbox" checked="checked" OnClick="changeSetting('settings.showFPS')" />
+								<span class="slider round"></span>
+							</label>
+						</td>
+						<td>
+							<!-- <input id="fpsInput" type="number" value="144" class="modern" style="width: 75px;" disabled="disabled" /> -->
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Show Mini-map
+						</td>
+						<td>
+							<label class="switch">
+								<input type="checkbox" checked="checked" OnClick="changeSetting('settings.showMiniMap')" />
+								<span class="slider round"></span>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Play critical strike sound
+						</td>
+						<td>
+							<label class="switch">
+								<input type="checkbox" checked="checked" OnClick="changeSetting('settings.playCritSound')" />
+								<span class="slider round"></span>
+							</label>
+						</td>
+						<td>
+							<input type="range" min="0" max="100" value="10" class="range" id="critVolume" OnChange="settings.critSoundVolume = this.value / 100;" OnMouseMove="this.title = this.value;" />						
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<fieldset style="width: 40%; position: absolute; left: 500px; top: 350px;">
+				<legend><h3>Advanced</h3></legend>
+				<table>
+					<tr>
+						<td>
+							Show range and extended stats hotkey
+						</td>
+						<td>
+							<input type="text" style="text-transform: uppercase;" value="C" OnChange="settings.extendedStats = this.value.toUpperCase();" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Ping in chat hotkeys
+						</td>
+						<td>
+							<input type="text" style="text-transform: uppercase;" value="G" OnChange="settings.pingKey = this.value.toUpperCase();" />
+						</td>
+						<td>
+							<input type="text" style="text-transform: uppercase;" value="V" OnChange="settings.pingKey2 = this.value.toUpperCase();" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Console
+						</td>
+						<td>
+							<input type="button" value="open console" OnClick="consoleWindow.open();" />
+						</td>						
+					</tr>
+				</table>
+			</fieldset>
+		</div>
+
+		<!-- description div-->
+		<div id="description">
+		</div>
+		
+		<!-- console div -->
+		<div id="console" style="display: none;">
+		</div>
+		
+		<!-- Chat -->
+		<div id="chat" OnMouseOver="this.style.overflow = 'auto'; document.getElementById('chatInput').style.display = 'block';" OnMouseOut="this.style.overflow = 'hidden'; hideChat();">
+			Press Enter to type...
+		</div>
+		<input type="text" id="chatInput" placeholder="Press Enter to send..." OnBlur="this.style.display = 'none'; hideChat();" />
+	</body> 
+</html>

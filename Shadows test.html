@@ -1,0 +1,44 @@
+<html>
+    <head>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/animationHandler.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/eventListeners.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/objects.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/mathMethods.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_JS_framework.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/framerate.js"></script>
+            <script src="http://localhost/HTML/Main_Scripts/shado_game_engin/loadingAnimation.js"></script>
+    </head>
+    <body>
+<script>
+    createCanvas(window.innerWidth, window.innerHeight);
+
+
+	c.translate(canvas.width / 2, canvas.height / 2);
+    c.scale(1, -1);
+    
+    resumeClear(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+
+    let bonhomme = new Rectangle(0, 0, 50, 150, {fill: "lightblue"});
+    let sun = new Circle(300, 300, 30, {fill: "yellow"});
+
+    let bonhommeVector = new Vector(-50, 150, 0);
+    let groundVector = new Vector(-500, 0, 0);
+
+    let shadow = bonhommeVector.project(groundVector);
+
+	
+    function render()   {
+
+        
+        c.strokeStyle = "black";
+        bonhomme.draw();
+        sun.draw();
+        bonhommeVector.draw();
+
+        c.strokeStyle = "red";
+        shadow.draw();
+ 
+    }
+</script>
+    </body>    
+</html>

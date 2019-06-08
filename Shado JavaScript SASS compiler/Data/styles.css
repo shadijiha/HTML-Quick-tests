@@ -1,0 +1,41 @@
+/*** 
+ * 
+ * Main CSS file for "compiler test" project 
+ * 
+ * 
+ */
+ 
+ 
+body	{
+	margin-left: 10%;
+	margin-top: 5%;
+}
+
+#input	{
+	border: solid black 5px;
+	padding: 25px;
+	width: 500px;
+	height: 500px;
+	background-color: #b19cd9;
+	font-size: 12pt;
+	font-family: "Lucida Console";
+}
+
+#result	{
+	border: solid black 5px;
+	padding: 25px;
+	width: 500px;
+	height: 500px;
+	background-color: pink;
+	font-size: 12pt;
+	font-family: "Lucida Console";
+}
+
+input[type=button]	{
+	padding: 15px;
+	border-radius: 10px;
+	border-width: 0px;
+	background-color: purple;
+	color: white;
+	font-size: 16pt;
+}

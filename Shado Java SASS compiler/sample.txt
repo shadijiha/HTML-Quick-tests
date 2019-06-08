@@ -1,0 +1,17 @@
+$font-stack = Helvetica,sans-serif;
+$primary-color = #333;
+$secondery_color = rgba(0,1,255);
+$url = url('hehexd.ico');
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+
+div.class	{
+	color: $secondery_color;
+}
+
+p#bg	{
+	background-image: $url;
+}

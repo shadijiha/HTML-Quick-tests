@@ -1,0 +1,25 @@
+<html> 
+	<head> 
+		<link rel="stylesheet" type="text/css" href="Data/styles.css" > 
+		<title>compiler test</title> 
+		
+	</head> 
+	<body> 
+		<h1>Welcome to Shado SASS compiler:</h1>
+		Enter your SASS code (*.SHADO file content) in the purple textbox to compile code to CSS. (Note: After downloading, if you have trouble with line breaks please try using notepad++).
+		<br />
+		<br />
+		
+		<input type="button" OnClick="convert();" value="Compile"/>
+		<br />
+		<br />
+		<textarea id="input"></textarea>
+		<textarea id="result"></textarea>
+		<br />
+		<input type="button" value="Download *.css" OnClick="convert(); saveTextAsFile(document.getElementById('result').value, 'test.css');" />
+		<input type="button" value="Download *.shadomap" OnClick="convert(); downloadMapFile();" />
+		
+		
+		<script src="Data/main.js"></script> 
+	</body> 
+</html> 

@@ -1,0 +1,14 @@
+[
+	{
+		"VAR"	:	"$main_font",
+		"VAL"	:	""brandon-regular";"
+	},
+	{
+		"VAR"	:	"$main_image",
+		"VAL"	:	"url("https://cdn-images-1.medium.com/max/2000/1*YunI3ChUVMlpmFzo75FczQ.png");"
+	},
+	{
+		"VAR"	:	"$background",
+		"VAL"	:	"url("http://localhost/Shado%20engin%20academy/Images/street.jpg");"
+	}
+]

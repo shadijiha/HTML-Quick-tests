@@ -1,0 +1,66 @@
+<html> 
+	<head> 
+		<title>Level builder</title>
+		<link rel="stylesheet" type="text/css" href="Data/CSS/styles.css"> 
+		<link rel="stylesheet" type="text/css" href="Data/CSS/checkButton.css">
+		<link rel="stylesheet" type="text/css" href="Data/CSS/level_builder.css"> 
+		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/animationHandler.js"></script> 
+		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/eventListeners.js"></script> 
+		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/objects.js"></script> 
+		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/mathMethods.js"></script> 
+		<script src = "http://localhost/HTML/Main_Scripts/shado_JS_framework.js"></script>
+		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/loadingAnimation.js"></script> 
+		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/namespace.js"></script>
+ <style>
+
+ </style>
+	</head> 
+	<body>
+		<script src="Data/classes.js"></script> 
+		<script src="Data/main.js"></script>
+		<script src="Data/items.js"></script>
+		
+		<div id="panel">
+			<div id="objectsNames"></div>
+			<br />
+				Level number: <input type="number" value="3" placeholder="Level number" id="levelNumber" OnChange="levelNumber = this.value;"/>
+				<br />
+				<br />
+				<input type="button" value="Delete selected" OnClick="deleteObject();" />
+				<input type="button" value="Unselect all" OnClick="deselectAll();" />
+				<input type="button" value="Reset world position" OnClick="resetworldPos();" />
+				<input type="button" value="Export level" OnClick="exportFile();" />
+				<input type="button" value="Export Json Map" OnClick="exportJSONMap();" />
+			<br />
+			<br />
+			<div class="mode">
+				<input type="radio" name="modeType" id="reposition" value="reposition" OnClick="changeMode(this.value)" checked="checked" /> Reposition mode <br />
+				<input type="radio" name="modeType" id="resize" value="resize" OnClick="changeMode(this.value)" /> Resize mode	<br />
+				<input type="radio" name="modeType" id="manual" value="manual" OnClick="changeMode(this.value)" /> Manual input mode <br />
+				<input type="checkbox" id="showCode" /> Show source code
+				<input type="checkbox" id="showMapCode" /> Show map code
+			</div>
+			<br />
+			<br />
+			<div id="properties">
+				Position: 
+					<input type="number" id="objX" placeholder="X" OnClick="changeMode('manual')" />, 
+					<input type="number" id="objY" placeholder="Y" OnClick="changeMode('manual')" />
+				<br />
+				Dimensions: 
+					<input type="number" id="objW" placeholder="width" OnClick="changeMode('manual')" />, 
+					<input type="number" id="objH" placeholder="Height" OnClick="changeMode('manual')" />
+			</div>
+		</div>
+		<div id="menu">
+		</div>
+		<textarea id="buff_input" placeholder="Enter buff here. Ex: player.hp += (player.maxHp * 0.10);" style="display: none; width: 300px; height: 80px;" ></textarea>
+		<textarea id="code" style="display: none;" disabled="disabled"></textarea>
+		<textarea id="mapCode" style="display: none;" disabled="disabled"></textarea>
+		
+ <script src="Data/Level_builder_Scripts/level_builder_main.js"></script>
+ <script src="Data/Level_builder_Scripts/level_builder_export.js"></script>
+ <script src="Data/Level_builder_Scripts/level_builder_import.js"></script>
+		
+	</body> 
+</html>

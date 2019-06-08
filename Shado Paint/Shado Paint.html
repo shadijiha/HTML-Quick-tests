@@ -1,0 +1,57 @@
+<html> 
+	<head> 
+		<link rel="stylesheet" type="text/css" href="Data/styles.css"> 
+		<link rel="icon" type="image/ico" href="http://icons.iconarchive.com/icons/wwalczyszyn/iwindows/256/Paint-icon.png">
+		<title>Shado Paint</title> 
+	</head> 
+	<body> 
+           <div class="ui">
+               <div class="colors">
+                    <div class="box green" title="Green" OnClick="changeColor('#008000');"></div>
+                    <div class="box lightgreen" title="Light green" OnClick="changeColor('#8fee9e');"></div>
+                    <div class="box blue" title="Blue" OnClick="changeColor('#0000ff');"></div>
+                    <div class="box lightblue" title="Light blue" OnClick="changeColor('#add8e6');"></div>
+                    <div class="box red" title="Red" OnClick="changeColor('#ff0000');"></div>
+                    <div class="box pink" title="Pink" OnClick="changeColor('#ffc0cb');"></div>
+                    <div class="box orange" title="Orange" OnClick="changeColor('#ffa500');"></div>
+                    <div class="box yellow" title="Yellow" OnClick="changeColor('#ffff00');"></div>
+                    <div class="box black" title="Black" OnClick="changeColor('#000000');"></div>
+                    <div class="box white" title="White" OnClick="changeColor('#ffffff');"></div>
+                    <br />
+                    <br />
+                    <div class="line_settings">
+                         <lable>Line</label>
+                         <br />
+                         <input type="color" id="lineColorInput" OnChange="changeColor(this.value);" />
+                         <br />
+                         <br />
+                         <input type="number" placeholder="width" OnChange="changeLineWidth(this.value);" />
+                         <br />
+                         <br />
+                         <input type="checkbox" id="transparency" OnChange="changeColor(document.getElementById('lineColorInput').value)"/>
+                         <label style="font-size: 10px;">Transparency</label>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="blackground">
+                         <lable>Background</label>
+                         <input type="color" OnChange="document.querySelector('canvas').style.backgroundColor = this.value;" />
+                         <br />
+                         <br />
+                         <input type="text" OnChange="document.querySelector('canvas').style.backgroundImage = `url('${this.value}')`" />
+                    </div>
+                    <br />
+                    <br />
+                    <div class="settings">
+                         <img src="http://www.pngmart.com/files/7/Undo-PNG-Photos.png" width="30" height="30" onclick="undo();"/>
+                         <img src="http://www.pngmart.com/files/7/Undo-PNG-Photos.png" width="30" height="30" onclick="redo();" style="transform: scaleX(-1);" />
+                         <img src="https://png.pngtree.com/svg/20170920/wrong_1275776.png" width="30" height="30" onclick="clearCanvas();"/>
+                    </div>
+               </div>
+          </div>
+          <canvas></canvas>
+
+		<script src="Data/main.js"></script> 
+
+	</body> 
+</html>
