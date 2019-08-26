@@ -20,10 +20,12 @@
 */
 					 
 	function loadLevel${levelNumber}()	{
-					 
+		
+		worldElements = [ground, castle];
 		monsters = [];
 		loots = [];
-		platformes = []; \n \n`;
+		platformes = [];
+		decorations = [];\n \n`;
 		
 		for (let temp of allObjects)	{
 		
@@ -32,7 +34,7 @@
 				case "Player":
 
 					// Default settings for each monster
-					str += `		var monster${monstersCount} = new Player(${temp.x}, ${temp.y}); \n 		monster${monstersCount}.shootImage = "bullet";\n		monster${monstersCount}.attackSpeed = 3; \n 		monster${monstersCount}.profile = "Data/Images/monster.png"; \n 		monster${monstersCount}.bulletSpeed = -3 \n		monster${monstersCount}.name = 'Monster ${monstersCount}';\n		monsters.push(monster${monstersCount}); \n`;
+					str += `		var monster${monstersCount} = new Player(${temp.x}, ${temp.y});\n 		monster${monstersCount}.shootImage = "bullet";\n		monster${monstersCount}.attackSpeed = 0.33;\n 		monster${monstersCount}.profile = "Data/Images/monster.png";\n 		monster${monstersCount}.bulletSpeed = -3;\n		monster${monstersCount}.name = 'Monster ${monstersCount}';\n		monsters.push(monster${monstersCount});\n`;
 					
 					// Adding command to buy items for specific monster on level load
 					for (let ownedItem of temp.ownedItems)	{
@@ -58,6 +60,11 @@
 		str += `
 		for (let myMonster of monsters)	{			
 			applyBuffsToAllItems(myMonster);
+			
+			for (let i = 0; i < level; i++)	{
+				myMonster.levelUp();
+			}
+			
 			worldElements.push(myMonster);
 		}
 	}`;
@@ -159,46 +166,10 @@
 	}
 
 	function generateJSONToText()	{
+
 		var code = generateJSON();
 
-		var string = `{\n	data: [\n		`;
-
-		for (let ele of code.data)	{
-			if (ele.type == "Player")	{
-				string += `{
-					type: "${ele.type}",
-					posX: ${ele.posX},
-					posY: ${ele.posY},
-					width: ${ele.width},
-					height: ${ele.height},
-					source: "${ele.source}",
-					items: [${ele.items}]
-				}, \n`;
-			} else	if (ele.type == "Loot")	{
-				string += `{
-					type: "${ele.type}",
-					posX: ${ele.posX},
-					posY: ${ele.posY},
-					width: ${ele.width},
-					height: ${ele.height},
-					source: "${ele.source}",
-					buff: "${ele.buff}"
-				}, \n`;
-			} else {
-				string += `{
-					type: "${ele.type}",
-					posX: ${ele.posX},
-					posY: ${ele.posY},
-					width: ${ele.width},
-					height: ${ele.height},
-					source: "${ele.source}"
-				}, \n`;
-			}
-		}
-
-		string += `\n	]\n}`;
-
-		return string;
+		return JSON.stringify(code);
 
 	}
 

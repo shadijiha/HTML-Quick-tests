@@ -22,24 +22,21 @@
 	let worldElements = [];
 	
 	let world = {
-		width: 5700,
+		width: scaleW(5200),
 		height: canvas.height,
-		level: 700,
+		level: scaleH(700),
 		virtualPosition: 0
 	};
 		
 	let ground = new Image("Data/Images/grass.png", -700, world.level - 150, world.width, canvas.height - world.level + 150, "ground");
-	let sun = new Image("Data/Images/sun.png", 200, 100, 150, 150, "sun");
 	let castle = new Image("Data/Images/end.png", world.width - 1150, world.level - 400, 400, 400, "castle");
-	let clouds = [
-		new Image("Data/Images/cloud.png", 800, -50, 1000, 500, "cloud")
-	];
 
 	let platformes = [];
 	let loots = [];
 	let decorations = [];
 	let allItmes = [];
 	let allWindows = [];
+	let tempRenderer = [];
 	let settings = {
 		showMonsterHpBar: true,
 		showMonsterEnergyBar: true,
@@ -59,15 +56,11 @@
 		extendedStats: "C",
 		pingKey: "G",
 		pingKey2: "V",
-		showHitBox: false
+		showHitBox: false,
+		itemShopLayout: "uncompressed"
 	};
-
-	// All elements in the worlds in this array 
-	for (let cloud of clouds)	{
-		worldElements.push(cloud);
-	}
 	
-	worldElements = [...worldElements, ground, sun, castle];
+	worldElements = [ground, castle];
 	
 	/**********************************************
 	***************** Player **********************
@@ -80,9 +73,7 @@
 	let gameOver = false;											// This BOOLEAN stores if the game has ended or not (player.hp <= 0)
 	//let level = 1;	THIS VERIABLE HAS BEEN MOVED TO "classes.js"// This INT variable tracks the current level
 	let time = 0;
-	let replay = [];
 	let totalMovedAmount = 0;
-	let replayMode = false;
 	
 	// Player mouvement
 	function moveWorld(amount)	{
@@ -100,22 +91,8 @@
 			world.virtualPosition -= amount;
 			player.initialX -= amount;
 			totalMovedAmount -= amount;
-
-			// Record replay
-			replay.push({
-				action:`moveWorld(${amount})`,
-				timeStamp: time
-			});
 		}
 	}
-
-	// To replay
-	function replayLevel()	{
-
-		replayMode = true;
-		
-	}
-
 
 	// To hide and show HTML elements
 	function hideElements(array)	{
@@ -134,11 +111,14 @@
 	function pingInChat(object, text)	{
 
 		if (pingMode && object.clicked())	{
-			document.getElementById("chat").style.display = "block";
-			document.getElementById("chat").innerHTML += `<br /> ${text}`;
+			//document.getElementById("chat").style.display = "block";
+			//document.getElementById("chat").innerHTML += `<br /> ${text}`;
+
+			socket.emit('sendMsgToServer', text);
+
 			pingMode = false;
 
-			hideChat();
+			//hideChat();
 		}
 
 	}
@@ -146,10 +126,63 @@
 	function hideChat()	{
 		if (document.getElementById('chat').style.display != "none")	{
 			setTimeout(function()	{
-				document.getElementById('chat').style.display = 'none'; document.getElementById('chatInput').style.display = 'none';
-			}, 4000);
+				if (document.activeElement != document.getElementById('chatInput'))	{
+					document.getElementById('chat').style.display = 'none';
+					document.getElementById('chatInput').style.display = 'none';
+				}
+			}, 10000);
 		}
 	}
+
+	function monsterSendChat(monster, text)	{
+		//document.getElementById("chat").innerHTML += `<br /><span class="enemy">[All] ${monster.name} (Monster):</span> ${filter(text)}`;
+
+		socket.emit('sendMsgToServer',  `${monster.name} (Monster): ${text}`);
+	}
+
+	window.onload = function()	{
+		document.getElementById("chat_form").addEventListener("submit", function(e)	{
+
+			var chatInput = document.getElementById("chatInput");
+			e.preventDefault();
+			
+			if (chatInput.value[0] == '/')	{
+				//socket.emit('debugRequest', chatInput.value.slice(1));	// Debugg chat
+
+				// Client side debugg
+				try	{
+					var response = eval(chatInput.value.slice(1));
+					document.getElementById("chat").innerHTML += `<div><green>Success!</green> ${chatInput.value.slice(1)} = ${response}</div>`;
+				} catch(err)	{
+					document.getElementById("chat").innerHTML += `<div><red>Error!</red>${err}</div>`;
+				}
+				
+			} else	{
+				socket.emit('sendMsgToServer', chatInput.value);		// Normal chat
+			}
+			
+			chatInput.value = '';		
+		});
+	}
+
+	socket.on('addToChat', data =>	{
+		if (document.getElementById("chat"))	{
+			var chatText = document.getElementById("chat");
+			chatText.innerHTML += '<div> ' + filter(data) + ' </div>';	
+			chatText.style.display = "block";
+			chatText.scrollTop = chatText.scrollHeight;
+			hideChat();
+			//parseChat();	
+		}
+
+	});
+	
+	socket.on('debugResponse', data =>	{
+		var chatText = document.getElementById("chat");
+
+		chatText.innerHTML += '<div>' + JSON.stringify(data) + '</div>';
+		console.log(data);
+	});
 
 
 	
@@ -158,6 +191,20 @@
 	**********************************************/
 	let paused = false;
 	let pauseButton = new Image("Data/Images/pauseButton.png", 0, 0, 75, 75, "pause_button");
+
+	function pauseGame()	{
+		if (!paused)	{
+			pauseButton.src = "Data/Images/playButton.png";
+			paused = true;
+			setTimeout(stopAnimation, 100);
+		} else	{
+			paused = false;
+			pauseButton.src = "Data/Images/pauseButton.png";
+			resumeAnimation();
+		}
+	}
+
+	pauseGame();
 
 	/**********************************************
 	***************** Settings ********************
@@ -198,6 +245,22 @@
 	/**********************************************
 	**************** Other stuff ******************
 	**********************************************/
+	function scaleH(number)	{
+		return number / (1080 * 0.922) * canvas.height;
+	}
+
+	function scaleW(number)	{
+		return number / 1920 * canvas.width;
+	}
+
+	function percentWidth(per)	{
+		return canvas.width * (per / 100);
+	}
+
+	function percentHeight(per)	{
+		return canvas.height * (per / 100);
+	}
+
 	function showDescription(text, positions)	{
 
 		if (positions == undefined)	{
@@ -248,21 +311,6 @@
 		}
 	}
 
-	function getItemData(object, itemName)	{
-
-		let holder;
-
-		for (let i = 0; i < object.itemsDataHolder.length; i++)	{
-			if (object.itemsDataHolder[i].item == itemName)	{
-				holder = object.itemsDataHolder[i];
-				object.itemsDataHolder.splice(i, 1);
-			}
-		}
-
-		return holder;
-
-	}
-
 	function assignDefault(variable, defaultValue)	{
 
 		if (variable == false || variable == true)	{
@@ -297,32 +345,33 @@
 
 	}
 
-	function filter(str)	{
+	function filter(string)	{
 
+		var str = string;
 		// Filter insults
-		str = substract(str, "fuck");
-		str = substract(str, "shit");
-		str = substract(str, "ass");
-		str = substract(str, "nigger");
+		str = str.replace(/fuck/, "****");
+		str = str.replace(/shit/, "****");
+		str = str.replace(/\bass\b/, "***");
+		str = str.replace(/nigger/, "******");
 
 		// Twitch emotes
-		str = replce(str, "Kappa", `<img title="Kappa" src="Data/Images/Emotes/Kappa.png" class="emote" width="32px" height="32px" />`);
-		str = replce(str, "4Head", `<img title="4Head" src="Data/Images/Emotes/4Head.png" class="emote" width="28px" height="35px" />`);
-		str = replce(str, "TriHard", `<img title="TriHard" src="Data/Images/Emotes/TriHard.png" class="emote" width="28px" height="32px" />`);
-		str = replce(str, "LULW", `<img title="LULW" src="Data/Images/Emotes/LULW.png" class="emote" width="28px" height="32px" />`);
-		str = replce(str, "OMEGALUL", `<img title="OMEGALUL" src="Data/Images/Emotes/OMEGALUL.png" class="emote" width="32px" height="32px" />`);
-		str = replce(str, "tyler1Hey", `<img title="tyler1Hey" src="Data/Images/Emotes/tyler1Hey.png" class="emote" width="32px" height="32px" />`);
-		str = replce(str, "PogU", `<img title="PogU" src="Data/Images/Emotes/PogU.png" class="emote" width="32px" height="32px" />`);
-		str = replce(str, "PepeHands", `<img title="PepeHands" src="Data/Images/Emotes/PepeHands.png" class="emote" width="32px" height="32px" />`);
-		str = replce(str, "FeelsBadMan", `<img title="FeelsBadMan" src="Data/Images/Emotes/FeelsBadMan.png" class="emote" width="32px" height="32px" />`);
-		str = replce(str, "EZ", `<img title="EZ" src="Data/Images/Emotes/EZ.png" class="emote" width="32px" height="32px" />`);
-		str = replce(str, "Clap", `<img title="Clap" src="Data/Images/Emotes/Clap.gif" class="emote" width="34px" height="34px" />`);
-		str = replce(str, "Pepega", `<img title="Pepega" src="Data/Images/Emotes/Pepega.png" class="emote" width="32px" height="32px" />`);
-		str = replce(str, "POGGERS", `<img title="POGGERS" src="Data/Images/Emotes/POGGERS.png" class="emote" width="32px" height="32px" />`);
-		str = replce(str, ":)", `<img title=":)" src="Data/Images/Emotes/smile.png" class="emote" width="28px" height="22px" />`);
-		str = replce(str, ":/", `<img title=":/" src="Data/Images/Emotes/slash.png" class="emote" width="28px" height="22px" />`);
-		str = replce(str, ":D", `<img title=":D" src="Data/Images/Emotes/D.png" class="emote" width="28px" height="22px" />`);
-		str = replce(str, ":P", `<img title=":P" src="Data/Images/Emotes/P.png" class="emote" width="28px" height="22px" />`);
+		str = str.replace("Kappa", `<img title="Kappa" src="Data/Images/Emotes/Kappa.png" class="emote" width="32px" height="32px" />`);
+		str = str.replace("4Head", `<img title="4Head" src="Data/Images/Emotes/4Head.png" class="emote" width="28px" height="35px" />`);
+		str = str.replace("TriHard", `<img title="TriHard" src="Data/Images/Emotes/TriHard.png" class="emote" width="28px" height="32px" />`);
+		str = str.replace("LULW", `<img title="LULW" src="Data/Images/Emotes/LULW.png" class="emote" width="28px" height="32px" />`);
+		str = str.replace("OMEGALUL", `<img title="OMEGALUL" src="Data/Images/Emotes/OMEGALUL.png" class="emote" width="32px" height="32px" />`);
+		str = str.replace("tyler1Hey", `<img title="tyler1Hey" src="Data/Images/Emotes/tyler1Hey.png" class="emote" width="32px" height="32px" />`);
+		str = str.replace("PogU", `<img title="PogU" src="Data/Images/Emotes/PogU.png" class="emote" width="32px" height="32px" />`);
+		str = str.replace("PepeHands", `<img title="PepeHands" src="Data/Images/Emotes/PepeHands.png" class="emote" width="32px" height="32px" />`);
+		str = str.replace("FeelsBadMan", `<img title="FeelsBadMan" src="Data/Images/Emotes/FeelsBadMan.png" class="emote" width="32px" height="32px" />`);
+		str = str.replace("EZ", `<img title="EZ" src="Data/Images/Emotes/EZ.png" class="emote" width="32px" height="32px" />`);
+		str = str.replace("Clap", `<img title="Clap" src="Data/Images/Emotes/Clap.gif" class="emote" width="34px" height="34px" />`);
+		str = str.replace("Pepega", `<img title="Pepega" src="Data/Images/Emotes/Pepega.png" class="emote" width="32px" height="32px" />`);
+		str = str.replace("POGGERS", `<img title="POGGERS" src="Data/Images/Emotes/POGGERS.png" class="emote" width="32px" height="32px" />`);
+		str = str.replace(":)", `<img title=":)" src="Data/Images/Emotes/smile.png" class="emote" width="28px" height="22px" />`);
+		str = str.replace(":/", `<img title=":/" src="Data/Images/Emotes/slash.png" class="emote" width="28px" height="22px" />`);
+		str = str.replace(":D", `<img title=":D" src="Data/Images/Emotes/D.png" class="emote" width="28px" height="22px" />`);
+		str = str.replace(":P", `<img title=":P" src="Data/Images/Emotes/P.png" class="emote" width="28px" height="22px" />`);
 
 		return str;
 
@@ -345,12 +394,4 @@
 		}
 
 		return temp.join("");
-	}
-
-	function monsterSendChat(monster, text)	{
-		document.getElementById("chat").innerHTML += `<br /><span class="enemy">[All] ${monster.name} (Monster):</span> ${filter(text)}`;
-	}
-
-	function chat(text)	{
-		document.getElementById("chat").innerHTML += filter(text);
 	}

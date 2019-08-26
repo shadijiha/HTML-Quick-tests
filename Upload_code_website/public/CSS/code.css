@@ -1,0 +1,49 @@
+/***
+* MAIN CSS FILE FOR Parsed Code
+***/
+
+     .code     {
+          font-family: 'Consolas';
+     }
+
+     .code .string {
+          color:rgb(5, 121, 24);
+     }
+     .code .special {
+          color:#D6665D;
+     }
+     .code .special-variables {
+          color:#D6665D;
+          font-style: italic;
+     }
+     .code .special-js {
+          color:#6DE4D1;
+     }
+     .code .special-js-glob {
+          color:#A1E46D;
+          font-weight:bold;
+     }
+     .code .special-comment{
+          color:#aaa;
+     }
+     .code .special-js-meth {
+          color:#E46D8A;
+     }
+     .code .special-html {
+          color:#E4D95F;
+     }
+     .code .special-sql {
+          color:#1D968C;
+     }
+     .code .special-php{
+          color:#597EA7;
+     }
+     .code .spacial-class     {
+          color: rgb(14, 54, 165);
+     }
+     .code .spacial-class-function {
+          color: rgb(8, 109, 149);
+     }
+     .code .special-digits{
+          color:rgb(212, 141, 25);
+     }

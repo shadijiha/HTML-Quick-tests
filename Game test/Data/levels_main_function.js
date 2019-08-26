@@ -29,15 +29,20 @@
 
 	function drawLevel()	{
 
-		player.distanceFromObjects = [];
-	
+		player.distanceFromObjects = [];	
+
+		// Drawing decorations
+		for (let decoration of decorations)	{
+			decoration.draw();
+		}
+
 		for (let monster of monsters)	{
 
 			// Making monster shoot
 			if (monsterAttackCooldown[monsters.indexOf(monster)] <= 0 && !paused && player.hp > 0)	{
 				monster.shoot(monster.shootImage);
-				monsterAttackCooldown[monsters.indexOf(monster)] = monster.attackSpeed * 1000;
-				new Ability(8246, monster.attackSpeed, "Data/Images/Long_Staff_item.png", monster, `This unit cannot attack <br /><br />Source: ${monster.name}`, 1050);
+				monsterAttackCooldown[monsters.indexOf(monster)] = (1 / monster.attackSpeed) * 1000;
+				new Ability(8246, 1 / monster.attackSpeed, "Data/Images/Long_Staff_item.png", monster, `This unit cannot attack <br /><br />Source: ${monster.name}`, hudProperties.x + 550);
 			}
 
 			// Detecting if any monster is clicked to draw his HUD	
@@ -49,17 +54,23 @@
 			if (monster.hp <= 0)	{
 
 				// Taking in chat
-				var messages = ["Nice shot!", "Well played!", "Lucky Kappa :/", "Why me PepeHands", `Only ${floor(monster.lastDamageTaken)} damage 4Head`, "Walked into it :/"];
+				var messages = ["Nice shot!", "Well played!", "Lucky Kappa :/", "Why me PepeHands", `Only ${floor(monster.statistics.lastDamageTaken)} damage 4Head`, "Walked into it :/"];
 				monsterSendChat(monster, messages[random(0, messages.length, true)]);
 
-				deadUnits.push(monster);
+				deadUnits.push(monster);	
+
+				// Selling all monters items to clean debuffs from Player
+				for (let x of monster.ownedItems)	{
+					sellItem(monster, x);
+				}
 
 				monsters.splice(monsters.indexOf(monster), 1);
 				monsterskilled++;
 				player.gold += reward;
 
+
 				// Showing the +gold to the player
-				player.info.push(new Info(monster, {value: reward, color: "yellow", image: "Data/Images/gold.png"}));
+				new Info(player, {value: reward, color: "yellow", image: "Data/Images/gold.png", angle: Math.PI/2});
 				
 				continue;
 			}
@@ -120,7 +131,7 @@
 			// Detecting of player has collided with monster
 			if (collision(player, monster) && !player.untagetable && !monster.untagetable)	{
 				player.damage(monster);
-				applyItemsEffects(player, monster);
+				applyItemsEffects(monster, player);
 				moveWorld(monster.w + 20);
 			}
 			
@@ -151,11 +162,6 @@
 		// Drawing loots
 		for (let loot of loots)	{
 			loot.update();
-		}
-
-		// Drawing decorations
-		for (let decoration of decorations)	{
-			decoration.draw();
 		}
 
 		// Drawing Player's ingame HUD (above him)

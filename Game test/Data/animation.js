@@ -9,48 +9,51 @@
  */
 
 	let lastClickedHudShow = player;
-	let reward = player.ad;
+	let reward = 300;
 
 	function globalLevelUp()	{
 		level++;											// Increasing level
-		player.gold += reward * 10;							// Adding gold to the player after wining level
-		moveWorld(world.width - 2 * (canvas.width / 3));	// Moving world back to beginning
+		player.gold += floor(reward * 3.333334);				// Adding gold to the player after wining level
+		moveWorld(totalMovedAmount);							// Moving world back to beginning
+		totalMovedAmount = 0;
 		player.levelUp();									// Leveling up the player's base stats
-		eval(`loadLevel${level}()`);						// Loading the next level
+		eval(`loadLevel${level}()`);							// Loading the next level
 		updateMonsterAttackCooldownArray();					// update Monster Basic attack Cooldown Array
-
 					
-		chat(`<br /><br />You reached level ${level} POGGERS`);				// Chatting
+		//chat(`<br /><br />${shadoName} has reached level ${level} POGGERS`);	// Chatting
+
 	}
 
 	function globalLevelDown()	{
 		level--;											// Increasing level
 		//player.gold -= reward * 10;							// Adding gold to the player after wining level
-		moveWorld(world.width - 2 * (canvas.width / 3));	// Moving world back to beginning
+		moveWorld(totalMovedAmount);							// Moving world back to beginning
+		totalMovedAmount = 0;
 		//player.levelUp();									// Leveling up the player's base stats
-		eval(`loadLevel${level}()`);						// Loading the next level
+		eval(`loadLevel${level}()`);							// Loading the next level
 		updateMonsterAttackCooldownArray();					// update Monster Basic attack Cooldown Array
 
 					
-		chat(`<br /><br />You reached level ${level} POGGERS`);				// Chatting
+		//chat(`<br /><br />${shadoName} has reached level ${level} POGGERS`);				// Chatting
 	}
 	
 	function render()	{
 	
 		// Drawing world
 		ground.draw();
-		sun.draw();
 		castle.draw();
 
-
 		time++;
-		
-		for (let cloud of clouds)	{
-			cloud.draw();
+
+		// Render any temporary objects
+		for (let element of tempRenderer)	{
+			if (element.draw)	{
+				element.draw();
+			}
 		}
 
 		// Update player name
-		player.name = shadoName;
+		//player.name = shadoName;
 
 		/********************************************
 		 **************** Level Drawing *************
@@ -68,8 +71,6 @@
 		****************************************** */
 		player.update();
 
-		reward = player.ad;	
-			
 		/********************************************
 		 **************** Hud Drawing ***************
 		****************************************** */				
@@ -145,31 +146,6 @@
 		}
 		window.levelText = new Text(`level: ${level}`, 400, 50, {size: 28, font: "Arial", fill: "black"});		
 		levelText.draw();
-
-		// Replay
-		if (replayMode)	{
-
-			if (!window.firstTimeReplaySet)	{
-				window.actions = [];
-				window.times = [];
-				time = 0;
-				moveWorld(totalMovedAmount);
-
-				for (let temp of replay)	{
-					window.actions.push(temp.action);
-					window.times.push(temp.timeStamp);
-				}
-
-				window.firstTimeReplaySet = true;
-
-			}
-
-			if (window.times[0] == time)	{
-				eval(window.actions[0]);
-				window.times = window.times.splice(1);
-				window.actions = window.actions.splice(1);
-			}
-		}
 	}
 
 	

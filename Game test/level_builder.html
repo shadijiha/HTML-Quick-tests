@@ -1,25 +1,42 @@
 <html> 
 	<head> 
 		<title>Level builder</title>
-		<link rel="stylesheet" type="text/css" href="Data/CSS/styles.css"> 
-		<link rel="stylesheet" type="text/css" href="Data/CSS/checkButton.css">
-		<link rel="stylesheet" type="text/css" href="Data/CSS/level_builder.css"> 
-		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/animationHandler.js"></script> 
-		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/eventListeners.js"></script> 
-		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/objects.js"></script> 
-		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/mathMethods.js"></script> 
-		<script src = "http://localhost/HTML/Main_Scripts/shado_JS_framework.js"></script>
-		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/loadingAnimation.js"></script> 
-		<script src = "http://localhost/HTML/Main_Scripts/shado_game_engin/namespace.js"></script>
+		<link rel="stylesheet" type="text/css" href="./Data/CSS/level_builder.css"> 
+		<link rel="stylesheet" type="text/css" href="./Data/CSS/styles.css"> 
+		<link rel="stylesheet" type="text/css" href="./Data/CSS/checkButton.css"> 
+		<script src = "./Main_Scripts/shado_game_engin/animationHandler.js"></script> 
+		<script src = "./Main_Scripts/shado_game_engin/eventListeners.js"></script> 
+		<script src = "./Main_Scripts/shado_game_engin/objects.js"></script> 
+		<script src = "./Main_Scripts/shado_game_engin/mathMethods.js"></script> 
+		<script src = "./Main_Scripts/shado_JS_framework.js"></script> 
+		<script src = "./Main_Scripts/shado_game_engin/loadingAnimation.js"></script>
+		<script src = "./Main_Scripts/shado_game_engin/namespace.js"></script>
+		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
  <style>
 
  </style>
 	</head> 
 	<body>
-		<script src="Data/classes.js"></script> 
-		<script src="Data/main.js"></script>
-		<script src="Data/items.js"></script>
 		
+		<script src="./Data/classes.js"></script> 
+		<script src="./Data/main.js"></script>
+		<script src="./Data/items_list.js"></script>
+		<script src="./Data/items.js"></script>		
+		<div id="signDiv">
+			<div id="errorDiv">
+				Error message
+			</div>
+			Username: <input id="signDiv-username" type="text" /><br />
+			<br />
+			Password: <input id="signDiv-password" type="password" /><br />
+			<br />
+			<input id="signDiv-signIn" value="Sign In" type="button" OnClick="signIn();"  />
+			<br />
+			<a href="http://localhost//HTML/shado%20site/shado%20new%20(developer)/Shado.php" target="_blank">
+				<input id="signDiv-signUp" value="Sign Up" type="button" />
+			</a>
+		</div>
+		<script src="./Data/sign.js"></script>
 		<div id="panel">
 			<div id="objectsNames"></div>
 			<br />

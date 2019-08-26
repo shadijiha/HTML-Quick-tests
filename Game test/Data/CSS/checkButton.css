@@ -48,8 +48,6 @@ input:checked + .slider:before {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
-
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
@@ -57,8 +55,6 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-
-/* RANGE INPUT */
 .range {
   -webkit-appearance: none;
   width: 100%;
@@ -81,7 +77,7 @@ input:checked + .slider:before {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #2196F3; /*#4CAF50;*/
+  background: #2196F3;
   cursor: pointer;
 }
 

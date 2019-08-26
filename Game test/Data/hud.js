@@ -6,13 +6,12 @@
  * 
  *
  */
-
   
 	let hudProperties = {
-		x: 500, 
-		y: canvas.height * 0.82,
 		w: 800,
-		h: canvas.height * 0.18	
+		h: canvas.height * 0.13	,
+		x: canvas.width / 2 - 800 / 2, 
+		y: canvas.height - (canvas.height * 0.13)
 	};
 		 
 	/************************************
@@ -122,19 +121,19 @@
 		new Image(obj.profile, hudZone.x - 220, hudZone.y + 20, 50, 100, "tempProfile").draw();
 		
 		// Getting stats for the stats display
-		let stats = [`${floor(obj.lifeSteal * 100)}%`, floor(obj.ad), floor(obj.armor), `${floor(obj.lithality)} | ${floor(obj.armorPen * 100)}%`, floor(obj.range), `${floor(obj.critChance * 100)}%`];
+		let stats = [floor(obj.ad), floor(obj.ap), floor(obj.armor), floor(obj.mr), `${obj.attackSpeed.toFixed(2)}`, `${floor(obj.critChance * 100)}%`];
 		
 		// Getting image sources for the stats display
-		let imgSrc = ["lifeSteal", "attack_damage", "armor", "armorPen", "range", "crit"];
-		let names = ["lifesteal", "attack Damage", "armor", "armor penetration", "range", "critical strike chance"];
+		let imgSrc = ["attack_damage", "ability_power", "armor", "mr", "attack_speed", "crit"];
+		let names = ["attack Damage", "Ability power", "armor", "Magic resiste", "attack speed (attack / second)", "critical strike chance"];
 
 		// Description for the stats display
 		let des = [
-					`This unit restores <green> ${floor(obj.lifeSteal * 100)}% </green> (${floor(obj.baseLifeSteal * 100)}% + ${floor(obj.bonusLifeSteal * 100)}%) of the damage dealt as health. This unit has restored a total of <green> ${floor(obj.healing)} </green> health from its life steal.`, 
-					`This unit has <orange> ${obj.ad} </orange> (${obj.baseAD} + ${obj.bonusAD}) attack damage. This unit has dealt a total of <orange> ${floor(obj.totalDamageDealth)} </orange> damage to enemies`, 
-					`This unit has ${floor(obj.armor)} (${floor(obj.baseArmor)} + ${floor(obj.bonusArmor)}) takes ${floor(obj.armor / (100 + obj.armor) * 100)}% reduced damage. This unit has avoided <purple> ${floor(obj.damageAvoided)} </purple> damage.`, 
-					`This unit ignores ${obj.armorPen * 100}% and ${obj.lithality} of target's armor. This unit has dealt <orange> ${floor(obj.bonusDamageDealt)} </orange> bonus damage by penetrating target's armor`,
-					"Range",
+					`This unit has <orange> ${obj.ad} </orange> (${obj.baseAD} + ${obj.bonusAD}) attack damage. This unit has dealt a total of <orange> ${floor(obj.statistics.totalPhysicalDamageDealt)} </orange> physical damage to enemies`, 
+					`This unit has <pink> ${floor(obj.ap)} </pink> ability power. This unit has dealt a total of <pink> ${floor(obj.statistics.totalMagicDamageDealt)} </pink> magic damage to enemies`, 
+					`This unit has ${floor(obj.armor)} (${floor(obj.baseArmor)} + ${floor(obj.bonusArmor)}) and takes ${floor(obj.armor / (100 + obj.armor) * 100)}% reduced physical damage. This unit has avoided <orange> ${floor(obj.statistics.physicalDamageAvoided)} </orange> damage.`, 
+					`This unit has ${floor(obj.mr)} (${floor(obj.baseMr)} + ${floor(obj.bonusMr)}) and takes ${floor(obj.mr / (100 + obj.mr) * 100)}% reduced magic damage. This unit has avoided <pink> ${floor(obj.statistics.magicDamageAvoided)} </pink> damage.`,
+					`This unit has ${(obj.attackSpeed).toFixed(2)} attack speed. This unit can attack for a maximum of ${(obj.attackSpeed).toFixed(2)} attacks per second.`,
 					`This unit can critical strike for a maximum of <orange> ${floor(obj.ad * obj.critMultiplier)} </orange> damage on ${floor(obj.critChance * 100)}% of its attacks`
 		];
 
@@ -194,16 +193,19 @@
 		new Image(obj.profile, hudProperties.x - 220, hudProperties.y + 20, 50, 100, "tempProfile").draw();
 		
 		// Getting stats for the stats display
-		let stats = [`${obj.ms}`, `${(1 / obj.attackSpeed).toFixed(2)}`];
+		let stats = [`${floor(obj.lifeSteal * 100)}%`, floor(obj.range), `${floor(obj.lithality)} | ${floor(obj.armorPen * 100)}%`, `${floor(obj.magicPen)} | ${floor(obj.magicPenPer * 100)}%`, floor(obj.ms)];
 		
 		// Getting image sources for the stats display
-		let imgSrc = ["ms", "attack_speed"];
-		let names = ["mouvement speed", "attack speed (seconds cooldown / attack)"];
+		let imgSrc = ["lifeSteal", "range", "armorPen", "magicPen", "ms"];
+		let names = ["Lifesteal speed", "Range", "Armor penetration", "Magic penetration", "mouvement speed"];
 
 		// Description for the stats display
 		let des = [
-					`This unit has ${obj.ms} mouvement speed`, 
-					`This unit has ${(obj.attackSpeed).toFixed(2)}. This unit does ${(1 / obj.attackSpeed).toFixed(2)} attack(s) per second`
+				`This unit restores <green> ${floor(obj.lifeSteal * 100)}% </green> (${floor(obj.baseLifeSteal * 100)}% + ${floor(obj.bonusLifeSteal * 100)}%) of the damage dealt as health. This unit has restored a total of <green> ${floor(obj.statistics.healing)} </green> health from its life steal`, 
+				"Range",
+				`This unit ignores <red>${obj.armorPen * 100}%</red> of target's armor, it also ignores <red>${obj.lithality}</red> flat armor from its target. This unit has dealt <orange>${floor(obj.statistics.bonusPhysicalDamageDealt)}</orange> bonus physical damage by penetrating enemies armor.`,
+				`This unit ignores <pink>${obj.magicPenPer * 100}%</pink> of target's magic resiste, it also ignores <pink>${obj.magicPen}</pink> flat magic from its target. This unit has dealt <pink>${floor(obj.statistics.bonusMagicDamageDealt)}</pink> bonus magic damage by penetrating enemies magic resistance`,
+				`This unit has ${obj.ms} mouvement speed`
 		];
 
 		// This array stores imaginary rectangles that trigger Description display on hover
@@ -211,9 +213,9 @@
 		
 		// Positions for the stats images, holders, etc
 		let tempPos = {
-			x: hudProperties.x - 160, 
+			x: hudProperties.x - 180, 
 			y: hudProperties.y + 20 - hudProperties.h,
-			w: 70,
+			w: 90,
 			h: 50
 		}
 		
@@ -233,7 +235,7 @@
 			
 			tempPos.x += tempPos.w;
 			if (tempPos.x > hudProperties.x - 30)	{
-				tempPos.x = hudProperties.x - 160;
+				tempPos.x = hudProperties.x - 180;
 				tempPos.y += tempPos.h;
 			}
 			

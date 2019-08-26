@@ -1,0 +1,21 @@
+/***
+*    MAIN CSS FILE
+*/
+
+#errorDiv	{
+	background:pink;
+	border: solid red 1px;
+	border-radius: 5px;
+	display: none;
+	width: 300px;
+	padding: 25px;
+}
+
+#chat-text, #chat-input     {
+     font-family: 'Arial';
+     padding: 15px;
+}
+
+.bold     {
+     font-weight: bold;
+}

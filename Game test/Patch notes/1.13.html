@@ -1,0 +1,148 @@
+﻿<html> 
+	<head> 
+		<title>Patch 1.13</title> 
+		<link rel="stylesheet" type="text/css" href="../Data/CSS/styles.css"> 
+	</head> 
+	<body id="patch_body">
+
+		<h1>
+			<a href="1.12.html" title="Previous patch"><</a>
+			Welcome to patch 1.13!
+			<a href="1.14.html" title="Next patch">></a>
+		</h1>
+		
+		<small>Release 22/05/2019 3:26:37 PM. Last update 04/07/2019 3:26:37 PM</small>
+		<br />
+		<br />
+		<fieldset>
+				<legend>
+					<span class="new float-left">new</span>							
+					<h2>Server side Chat and login system</h2>
+				</legend>
+				<br />
+				You can now login with own <a href="http://localhost//HTML/shado%20site/shado%20new%20(developer)/Shado.php">Shado account</a> and chat in [All] chat with other people!
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="updated float-left">Hot fix</span>	
+					<img class="rounded" src="../Data/Images/Guinsoo_s_Rageblade_item.png" width="64" height="64" />
+					<h2>Guinsoo's Rageblade</h2>
+				</legend>
+				<p>
+					Guinsoo's Rageblade was way too powerful against tank items. We are reducing the initial burn amount as well as making it deal <b>physical</b> damage instead of true damage. Also, we are extending the duration to give the chance to affected units to lifesteal. We are also adding a scaling on the burn maximum health damage to prevent source from building tank.
+				</p>
+				<p>
+					<table>
+						<tr>
+							<th>Damage type</th>
+							<td><s>true</s></td>
+							<td>physical</td>
+						</tr>
+						<tr>
+							<th>Burn damage</th>
+							<td><s>5%</s></td>
+							<td>4% + 1% per <orange>100</orange> bonus AD (<i>capped at 100%</i>)</td>
+						</tr>
+						<tr>
+							<th>Duration</th>
+							<td><s>3 seconds</s></td>
+							<td>5 seconds</td>
+						</tr>
+					</table>
+				</p>
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="new float-left">new</span>	
+					<img class="rounded" src="../Data/Images/Guinsoo_s_Rageblade_item.png" width="64" height="64" />
+					<h2>Guinsoo's Rageblade</h2>
+				</legend>
+				<p>
+					<span class="new float-left small">new</span>
+					UNIQUE PASSIVE: Grants +25 attack damage and +25% attack speed
+					<br />
+					<br />
+					<span class="new float-left small">new</span>
+					UNIQUE PASSIVE - <b>Sure death</b>: Damaging an enemy burn them for 5% of their maximum health <b>true</b> damage over 3 seconds. This burn damage can critical strike for 50% (+25% <img class="rounded" src="../Data/Images/infinity_edge_item.png" width="25" height="25" title="Infinity edge" />) bonus <b>true</b> damage
+					<br />
+					<br />
+				</p>
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="updated float-left">updated</span>	
+					<img class="rounded" src="../Data/Images/Thornmail_item.png" width="64" height="64" />
+					<h2>Thornmail</h2>
+				</legend>
+				<p>
+					Thornmail was still too weak even after <a href="1.5.html">patch 1.5</a> rework. So we are giving it some significant buffs.
+				</p>
+				<p>
+					<table>
+						<tr>
+							<th>Reflected damage</th>
+							<td><s>10%</s></td>
+							<td>15% (<i>Damage type unchanged</i>)</td>
+						</tr>
+					</table>
+					<br />
+					<span class="new float-left small">new</span>
+						Now applied the <b>Glorious Executioner</b> on the attacker for 5 seconds.
+						<br />
+						<br />
+					<span class="new float-left small">new</span>
+						Now shows the remaining duration of the Glorious Executioner applied from <img class="rounded" src="../Data/Images/Thornmail_item.png" width="25" height="25" title="Thornmail" /> on the affected unit HUD.
+						<br />
+						<br />
+					<span class="removed float-left small">removed</span>
+						No longer critical strikes based on <img class="rounded" src="../Data/Images/Thornmail_item.png" width="25" height="25" title="Thornmail" /> owner critical strike chance.
+						<br />
+						<br />
+					<span class="new float-left small">new effect</span>
+						Now will critical strike if the reflected attack has critical striked.
+						<br />
+						<br />
+				</p>
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="updated float-left">updated</span>	
+					<img class="rounded" src="../Data/Images/Mortal_Reminder_item.png" width="64" height="64" />
+					<h2>Mortal reminder</h2>
+				</legend>
+				<p>
+					<span class="removed float-left small">removed</span>
+						No longer applies the <b>Glorious Executioner</b> on all enemies in owner's range.
+						<br />
+						<br />
+					<span class="new float-left small">new</span>
+						Now applies the <b>Glorious Executioner</b> on enemies hit by basic attacks for 3 seconds.
+						<br />
+						<br />
+				</p>
+		</fieldset>
+		<br />
+		<fieldset>
+			<legend><h2>Bug fixes and other changes</h2></legend>
+			<ul>
+				<li>
+					Fixed bug where if you sell <img class="rounded" src="../Data/Images/essence_reaver_item.png" width="25" height="25"/> essence reaver and it's passive wasn't triggered it will tranform your AD to NaN
+				</li>
+				<li>
+					Fixed bug where if you sell an attack speed item it will tranform your attack speed to NaN and you won't be able to attack
+				</li>
+				<li>
+					Onhit and reflect effects system has been updated and optimized.
+				</li>
+				<li>
+					Armor penetration tooltip has been updated.
+				</li>
+			</ul>
+		</fieldset>
+
+	</body> 
+</html>

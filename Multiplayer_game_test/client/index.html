@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="./client/styles.css">
+		<title>Multiplayer game test | index</title>
+		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	</head>
+	<body style="margin: 0px;">
+		<div id="signDiv">
+			<div id="errorDiv">
+				Error message
+			</div>
+			Username: <input id="signDiv-username" type="text" /><br />
+			Password: <input id="signDiv-password" type="password" /><br />
+			<input id="signDiv-signIn" value="Sign In" type="button" />
+			<input id="signDiv-signUp" value="Sign Up" type="button" />
+		</div>
+		<div id="gameDiv" style="display: none;">
+			<canvas id="engin"></canvas>
+			<div id="chat-text" style="width: 500px; height: 100px; overflow-y: auto; max-width: 500px;">
+				<div>Hello!</div>
+			</div>
+			<form id="chat-form">
+				<input id="chat-input" type="text" style="width: 500px;" />
+			</form>
+		</div>
+<script src="./client/js/sign.js"></script>
+<script src="./client/js/chat.js"></script>
+<script src="./client/js/game_logic.js"></script>
+<script src="./client/js/events.js"></script>
+		
+	</body>
+</html>

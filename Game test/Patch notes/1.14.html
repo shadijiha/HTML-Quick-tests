@@ -1,0 +1,416 @@
+﻿<html> 
+	<head> 
+		<title>Patch 1.14</title> 
+		<link rel="stylesheet" type="text/css" href="../Data/CSS/styles.css"> 
+	</head> 
+	<body id="patch_body">
+
+		<h1>
+			<a href="1.13.html" title="Previous patch"><</a>
+			Welcome to patch 1.14!
+			<a href="1.15.html" title="Next patch">></a>
+		</h1>
+		
+		<small>Release 06/07/2019 12:50:12 PM. Last update 16/07/2019 11:47:33 AM</small>
+		<br />
+		<br />
+		<fieldset>
+				<legend>
+					<span class="new float-left">new</span>				
+					<h2>Magic damage</h2>
+				</legend>
+				<br />
+			Magic damage is a new form of damage that ignores target's <img title="Armor icon" src="../Data/Images/armor.png" /> armor. Magic damage can be reduced by <img title="Magic resiste icon" src="../Data/Images/mr.png" /> and increased generaly by ability power <img title="Armor icon" src="../Data/Images/ability_power.png" />
+			<br />
+			<br />			
+			If magic damage critical strikes, it appears as a purple critical strike <img src="../Data/Images/Magic_Critical_strike_chance.png" /> icon instead of orange.
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<img class="rounded" src="../Data/Images/attack_speed.png" width="50" height="50" />					
+					<h2>Attack speed</h2>
+				</legend>
+				<br />
+			Attack speed system has been completly updated and simplified:<br /> <br />
+			<li>Previous system used the attack speed as a cooldown in second between 2 attacks. New system uses attack speed as the maximum of attacks a unit can do per second. (We will use <i>s</i> for cooldown in seconds and <i>A/S</i> for attacks per seconds)</li> <br />
+			For example, a unit has 0.667 attack speed (1.5 attacks per second) buys an item that gives +40% attack speed: <br />
+			<ul>
+				<li>
+					<b>Previous system:</b> 0.667s - (0.667s * 0.40) = 0.4002s (2.49 A/S). This system didn't make any sense since with only one item a unit can get almost maximum attack speed (2.50 is the cap of attack speed a unit can get).
+				</li>
+				<li>
+					<b>New system:</b> 1.5 A/S + 0.40 = 1.90 A/S (0.526s). The new system is much simpler and does not use the <i>s</i> notation in calculations since it was really buggy and confusing.
+				</li>
+			</ul>
+			<br />
+			With that being said, Player and monsters attack speed had to be adjusted: <br />
+			<table>
+				<tr>
+					<th>
+						Player's base attack speed:
+					</th>
+					<td>
+						<s>1.00s</s>
+					</td>
+					<td>
+						0.67 A/S (1.50s)
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Monsters' base attack speed:
+					</th>
+					<td>
+						<s>3.00s</s>
+					</td>
+					<td>
+						0.33 A/S (3.00s)
+					</td>
+				</tr>				
+			</table>			
+		</fieldset>
+		<br />
+		<fieldset>
+			<legend>
+				<img src="../Data/Images/Critical_strike_chance.png" width="64" height="64" />
+				<h2>Critical strike</h2>
+			</legend>
+			<span class="new float-left small">new effect</span> Sound now only plays if the damage amount is greater than 20.
+		</fieldset>
+		<br />
+		<fieldset>
+			<legend>
+				<span class="updated float-left">updated</span>							
+				<h2>Immunity</h2>
+			</legend>
+			<br />
+			<span class="new float-left small">New</span>
+				Now properly blocks attacks that will bring the immnute unit below 20% maximum health
+			<br />
+			<br />
+			<span class="new float-left small">New effect</span>
+				Now displays "blocked" info when ever an attack was blocked
+			<br />
+			<br />
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>					
+					<h2>Kills and level rewards</h2>
+				</legend>
+			<table>
+				<tr>
+					<th>
+						Monster kill gold reward
+					</th>
+					<td>
+						<s>Player's <orange>total AD</orange></s>
+					</td>
+					<td>
+						300
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Level gold reward
+					</th>
+					<td>
+						<s>Player's <orange>total AD</orange> * 10</s>
+					</td>
+					<td>
+						monster kill reward * 3.333334
+					</td>
+				</tr>				
+			</table>
+			<br />
+			<span class="new float-left small">new</span>
+				Monsters now level up when player reach next level
+				<br />
+				<br />
+			<span class="new float-left small">new</span>
+				Level auto loader has been updated to use only JavaScript instead of PHP.
+				<br />
+				<br />
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<img class="rounded" src="../Data/Images/lifeSteal.png" width="50" height="50" />					
+					<h2>Lifesteal</h2>
+				</legend>
+				<br />
+			<span class="new float-left small">new effect</span> Lifesteal now only applies on basic attacks (On-hit damage no longer heals).
+				<br />
+				<br />
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>					
+					<h2>Onhit effects</h2>
+				</legend>
+				<br />
+				Onhit effects delay reduced to 0.10 second from 1 second.
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="updated float-left">updated</span>	
+					<img src="../Data/Images/player.png" width="50" height="100" />									
+					<h2>Player & monsters</h2>
+				</legend>
+			<span class="new float-left small">new</span>
+				Player will now start the game with 1 random item.
+				<br />
+				<br />
+			Base stats:
+			<table>
+				<tr>
+					<th>
+						Base ability power
+					</th>
+					<td>
+						<s>0</s>
+					</td>
+					<td>
+						60
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Base magic resistance
+					</th>
+					<td>
+						<s>0</s>
+					</td>
+					<td>
+						19 + (14 per level)
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Base magic penetration
+					</th>
+					<td>
+						<s>0 | 0%</s>
+					</td>
+					<td>
+						0 | 0%
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Base Armor penetration
+					</th>
+					<td>
+						<s>0 | 15%</s>
+					</td>
+					<td>
+						15 | 10%
+					</td>
+				</tr>
+				<tr>
+					<th>
+						AD groth
+					</th>
+					<td>
+						<s>12</s>
+					</td>
+					<td>
+						20
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Bullet/shot speed
+					</th>
+					<td>
+						<s>5</s>
+					</td>
+					<td>
+						3
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Base critical strike chance
+					</th>
+					<td>
+						<s>5%</s>
+					</td>
+					<td>
+						25%
+					</td>
+				</tr>				
+			</table>
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="new float-left">new</span>
+					<img class="rounded" src="../Data/Images/Stun_icon.png" width="50" height="50" />					
+					<h2>Stun</h2>
+				</legend>
+				<br />
+			Stun is a new form of <b>crowd control</b>. Stunned enemies cannot jump, attack or move until the end of the stun duration.
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="updated float-left">updated</span>	
+					<img class="rounded" src="../Data/Images/Frozen_Heart_item.png" width="64" height="64" />
+					<h2>Frozen Heart</h2>
+				</legend>
+				<p>
+					Frozen Heart was too annoying to face. We are making it more interesting and less annoying to enmies to face
+				</p>
+				<p>
+					<span class="removed float-left small">removed</span>
+					UNIQUE PASSIVE - <b>Freeze</b>: no longer slows the bullet/shots velocity by 75% for all enemies in range.
+						<br />
+						<br />
+					<span class="new float-left small">new</span>
+					UNIQUE PASSIVE - <b>Freeze</b>: basic attacks have 10% + owner % crit chance (capped at 50%) chance to stun the targetted enemy for 1.5 (<pink>+0.01%</pink> AP) seconds.
+						<br />
+						<br />
+				</p>
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="new float-left">new</span>	
+					<img class="rounded" src="../Data/Images/Liandry's_Torment_item.png" width="64" height="64" />
+					<h2>Liandry's Torment</h2>
+				</legend>
+				<span class="new float-left small">new</span>
+					UNIQUE PASSIVE: Grants +75 ability power and +300 health
+					<br />
+					<br />
+				<span class="new float-left small">new</span>
+					UNIQUE PASSIVE - <b>sure death</b>: dealing damage to enemies burn them for 4.5% of their maximum health over 3 seconds increased to 9% against <br /><br /> <img class="rounded" src="../Data/Images/Stun_icon.png" /> stunned enemies. This effect cannot be retriggered until the last burn has ended (target cannot burn more than once at the time).
+					<br />
+					<br />
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="new float-left">new</span>	
+					<img class="rounded" src="../Data/Images/Void_Staff_item.png" width="64" height="64" />
+					<h2>Void Staff</h2>
+				</legend>
+				<span class="new float-left small">new</span>
+					UNIQUE PASSIVE: Grants +70 ability power
+					<br />
+					<br />
+				<span class="new float-left small">new</span>
+					UNIQUE PASSIVE: +40% magic penetration
+					<br />
+					<br />
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="new float-left">new</span>	
+					<img class="rounded" src="../Data/Images/Nashor_s_Tooth_item.png" width="64" height="64" />
+					<h2>Nashor's Tooth</h2>
+				</legend>
+				<span class="new float-left small">new</span>
+					UNIQUE PASSIVE: Grants +80 ability power and +50% attack speed
+					<br />
+					<br />
+				<span class="new float-left small">new</span>
+					UNIQUE PASSIVE: Basic attacks deal 30 + <pink>40% AP</pink> bonus onhit magic damage
+					<br />
+					<br />
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="new float-left">new</span>	
+					<img class="rounded" src="../Data/Images/Rabadon_s_Deathcap_item.png" width="64" height="64" />
+					<h2>Rabadon's Deathcap</h2>
+				</legend>
+				<span class="new float-left small">new</span>
+					UNIQUE PASSIVE: +120 ability power
+					<br />
+					<br />
+				<span class="new float-left small">new</span>
+					UNIQUE PASSIVE: Increase your total ability power by +40%
+					<br />
+					<br />
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<img class="rounded" src="../Data/Images/Guinsoo_s_Rageblade_item.png" width="64" height="64" />
+					<h2>Guinsoo's Rageblade</h2>
+				</legend>
+				<p>
+					<span class="removed float-left small">removed</span>
+					UNIQUE PASSIVE - <b>Sure death</b>: Damaging to an enemy no longer burn them for 4% (+ 1% per <orange>100</orange> bonus AD) of their maximum health <b>physical</b> damage over 5 seconds. This burn damage can critical strike for 50% (+25% <img class="rounded" src="../Data/Images/infinity_edge_item.png" width="25" height="25" title="Infinity edge" />) bonus <b>physical</b> damage
+					<br />
+					<br />
+					<span class="new float-left small">new</span>
+					UNIQUE PASSIVE - <b>growing rage</b>: Damaging an enemy grants 1 Guinsoo stack stacking infinitly. Each Guinsoo stack grants +4% attack speed and decays after 3 seconds.
+					<br />
+					<br />
+				</p>
+		</fieldset>
+		<br />
+		<fieldset>
+				<legend>
+					<span class="updated float-left">updated</span>
+					<img class="rounded" src="../Data/Images/Statikk_Shiv_item.png" width="64" height="64" />		
+					<h2>Statikk Shiv</h2>
+				</legend>
+			<br />
+			<span class="removed float-left small">removed</span>
+				UNIQUE PASSIVE: No longer deal 10 + 10% of target missing health as bonus physical damage. This damage cannot critical strike.
+			<br />
+			<br />
+			<span class="new float-left small">new</span>
+				UNIQUE PASSIVE: Basic attacks deal 60 <orange>+120%</orange> bonus AD <pink>+80%</pink> AP bonus onhit <b>magic</b> damage. This damage will critical strike if the attack that triggered the <img class="rounded" src="../Data/Images/Statikk_Shiv_item.png" width="25" height="25" title="Statikk Shiv" /> effect has critical striked
+			<br />
+			<br />
+		</fieldset>
+		<br />
+		<fieldset>
+			<legend>
+				<span class="updated float-left">updated</span>
+				<img class="rounded" src="../Data/Images/Iceborn_Gauntlet_item.png" width="64" height="64" />		
+				<h2>Iceborn Gauntlet</h2>
+			</legend>
+		<br />
+		<span class="updated float-left small">Bug fix</span>
+			Fixed bug where <img class="rounded" src="../Data/Images/Iceborn_Gauntlet_item.png" width="25" height="25" title="Iceborn Gauntlet" /> granted +65 armor
+		<br />
+		<br />
+		<span class="new float-left small">new</span>
+			Now grantes +45 armor and immunity
+		<br />
+		<br />
+		<span class="updated float-left small">updated</span>
+			UNIQUE PASSIVE - <b>Giant strength</b> : while you are at 20% max health, gain <orange>+100% bonusAD</orange> and <red>100%</red> critical strike chance for <b>3 + level</b> seconds. After the duration, gain <purple>100% base armor</purple> <b>base</b> armor and heal for <green>20%</green> of your maximum health (15 seconds cooldown). The armor buff can only be granted once.
+		<br />
+		<br />
+		</fieldset>
+		<br />
+		<fieldset>
+			<legend><h2>Bug fixes and other changes</h2></legend>
+			<ul>
+				<li>
+					Updated the whole stat HUD and tooltips
+				</li>
+				<li>
+					Fixed bug where if you drag an in-game windows to the left and/or the bottom, the page will scrol and show a white space.
+				</li>
+				<li>
+					Fixed bug where descriptions from the small buffs (potions, bonus gold) crashed the game if hovered.
+				</li>
+				<li>
+					Fixed bug where if player collided with a monster, it will apply player's on-hit effects on the monster istead of the reverse.
+				</li>
+			</ul>
+		</fieldset>
+	</body> 
+</html>

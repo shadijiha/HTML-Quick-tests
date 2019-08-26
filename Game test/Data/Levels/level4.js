@@ -9,16 +9,18 @@
 */
 					 
 	function loadLevel4()	{
-					 
+
+		worldElements = [ground, castle];					 
 		monsters = [];
 		loots = [];
 		platformes = []; 
+		decorations = [];
  
 		var monster0 = new Player(992.5, 399); 
  		monster0.shootImage = "bullet";
-		monster0.attackSpeed = 3; 
  		monster0.profile = "Data/Images/monster.png"; 
- 		monster0.bulletSpeed = -3 
+ 		monster0.bulletSpeed = -3;
+		monster0.attackSpeed = 0.33;
 		monster0.name = 'Monster 0';
 		monsters.push(monster0); 
 
@@ -39,6 +41,11 @@ buyItem(player, ran);
 
 		for (let myMonster of monsters)	{			
 			applyBuffsToAllItems(myMonster);
+
+			for (let i = 0; i < level; i++)	{
+				myMonster.levelUp();
+			}
+
 			worldElements.push(myMonster);
 		}
 	}
