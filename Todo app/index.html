@@ -1,0 +1,231 @@
+<html>
+    <head>
+        <title>To do app</title>
+<style>
+
+body    {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+input[type=text], input[type=date], input[type=time]    {
+    padding: 10px;
+    border-radius: 6px;
+    border: solid gray 1px;
+}
+
+td, th    {
+    padding: 10px;
+}
+
+td img {
+    cursor: pointer;
+}
+
+.formated_table {
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 60%;
+    margin: 0 auto;
+    position: relative;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+}
+
+.formated_table tr.first_row  {
+    background-color: #36304a;
+    color: white;  
+}
+
+.formated_table th  {
+    font-size: 18px;
+    color: #fff;
+    line-height: 1.2;
+    font-weight: unset;
+}
+
+.formated_table tr:nth-child(2n+3)   {
+    background-color: #f5f5f5;
+}
+
+</style>
+    </head>
+    <body>
+        <h1>Todo app:</h1>
+        <div id="toDo_display">
+        </div>
+        <br />
+        <br />
+        <div>
+            <h2>Add new toDo</h2>
+            <table>
+                <tr>
+                    <td>Task</td>
+                    <td>
+                        <input id="task" type="text" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Deadline</td>
+                    <td>
+                        <input id="deadline" type="date" />
+                    </td>
+                    <td>
+                        <input id="deadline_hour" type="time" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" value="Add" OnClick="addData();" />
+                    </td>
+                 </tr>
+            </table>
+        </div>
+<script>
+
+    var toDoList = [];
+
+    async function getData()    {
+        const request = await fetch("/readDB");
+        const json = await request.json();
+        const data = json.results;
+
+        toDoList = data;
+    }
+
+    function formateTime(time)  {
+
+        // Convert time to seconds from milliseconds
+        time = time / 1000;
+
+        // time in seocnds
+        var days = Math.floor(time / 86400);
+        var hours = Math.floor((time - (days * 86400)) / 3600);
+        var min = Math.floor((time -  (days * 86400) - (hours * 3600)) / 60 );
+        var seconds = Math.floor( time -  (days * 86400) - (hours * 3600) - (min * 60) );
+
+        days = days < 10 ? ('0' + days) : days;
+        hours = hours < 10 ? ('0' + hours) : hours;
+        min = min < 10 ? ('0' + min) : min;
+        seconds = seconds < 10 ? ('0' + seconds) : seconds;
+
+        return `${days}D ${hours}:${min}:${seconds}`;
+
+    }
+
+    function displayData(data)  {
+
+        const BODY = document.getElementById("toDo_display");
+
+        var str = `<table class="formated_table">
+            <tr class="first_row">
+                <th>Task</th>
+                <th>Deadline</th>
+                <th>Time left</th>
+                <th>Options</th>
+            </tr>`;
+
+        // Sort array
+        data.sort(function(a, b)    {
+            var t1 = new Date(a.deadline).getTime() - new Date().getTime();
+            var t2 = new Date(b.deadline).getTime() - new Date().getTime();
+            return t1 - t2;
+        }); 
+
+        for (let i = 0; i < data.length; i++)   {
+
+            var timeLeft =  new Date(data[i].deadline).getTime() - new Date().getTime();
+            var dateString = formateTime(timeLeft);
+
+            var style = "";
+             
+            if (timeLeft < 6 * 60 * 60 * 1000) {
+                style = "background-color: red; color: white;";
+            } else if (timeLeft < 12 * 60 * 60 * 1000)    {
+                style = "background-color: yellow;"
+            }
+
+            str += "<tr>";
+            
+            str += `<td>${data[i].todo}</td>
+                    <td>${new Date(data[i].deadline).toLocaleString()}</td>
+                    <td style="${style}">${dateString}</td>
+                    <td style="text-align: center;">
+                        <img src="delete-trash-pngrepo-com.png" OnClick="deleteToDo('${data[i]._id}')" height="25"/>
+                    </td>`
+
+            str += "</tr>";
+
+        }
+
+        str += "</table>";
+
+        BODY.innerHTML = str;
+    }
+
+    async function addData()  {
+
+        var task = document.getElementById("task").value;
+        var tempDeadline = document.getElementById("deadline").value;
+
+        tempDeadline = tempDeadline.split("-");
+        
+        // Convert dead line from YYYY-MM-DD to 
+        var deadline_hours = document.getElementById("deadline_hour").value;
+        deadline_hours = deadline_hours.split(":");
+
+        var deadline = new Date(Number(tempDeadline[0]), Number(tempDeadline[1] - 1), Number(tempDeadline[2]), Number(deadline_hours[0]), Number(deadline_hours[1]) );
+
+        const data = { todo: task, deadline: deadline };
+		
+        const options = {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        };
+
+        const response = await fetch('/addTodo', options);	
+        const json = await response.json();
+
+        getData();
+
+    }
+
+    async function deleteToDo(id)   {
+
+		const data = {id: id};
+		
+		const options = {
+			method: 'POST',
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify(data)
+		};
+			
+		const response = await fetch('/deleteTodo', options);
+        
+        for (let i = 0; i < 10; i++)    {
+            getData();
+        }		
+
+    }
+
+    getData();
+
+    setInterval(function()  {
+        displayData(toDoList);
+    }, 1000);
+
+</script>
+
+
+    </body>
+</html>
