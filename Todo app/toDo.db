@@ -1,5 +1,12 @@
-{"todo":"Finir A2 COMP-232","deadline":"2019-10-14T03:59:00.000Z","_id":"zZH3eaz1IBE7bRgI"}
-{"todo":"Faire week 2 & 3 exersices ENGR-213","deadline":"2019-10-15T02:00:00.000Z","_id":"jmorrqY0rtXyzL6U"}
-{"todo":"Faire exercices CH.5 et CH.6 et commencer CH.7 ECON-203","deadline":"2019-10-21T02:00:00.000Z","_id":"32tmA5UPFrERmflS"}
-{"todo":"Carte d'assurance maladie","deadline":"2019-10-20T20:00:00.000Z","_id":"iCWbbRsCm1E0sHNC"}
-{"todo":"Finir les video de COOP","deadline":"2019-10-14T02:00:00.000Z","_id":"zH7l5gGZoIOyXVYd"}
+{"todo":"Faire exercices CH.5 et CH.6 et commencer CH.7 ECON-203","deadline":"2019-10-21T02:00:00.000Z","color":"orange","_id":"32tmA5UPFrERmflS"}
+{"todo":"CF3 Cover Letter Skills ","deadline":"2019-11-16T04:59:00.000Z","color":"orange","_id":"Wg5XH0QnxcENF6yj"}
+{"todo":"CF5 Work Term Prep coop-video","deadline":"2019-11-30T04:59:00.000Z","color":"orange","_id":"WoZFXh5f80M3997o"}
+{"todo":"CF2 Résumé Skills Coop-video","deadline":"2019-11-02T03:59:00.000Z","color":"orange","_id":"XhTZbU8VCPgNrcyk"}
+{"todo":"CF4 Interview Skills coop-video","deadline":"2019-11-30T04:59:00.000Z","color":"orange","_id":"csKYyXgNtqCllryd"}
+{"todo":"Carte d'assurance maladie","deadline":"2019-10-20T20:00:00.000Z","color":"yellow","_id":"iCWbbRsCm1E0sHNC"}
+{"todo":"Faire week 2 & 3 exersices ENGR-213","deadline":"2019-10-15T02:00:00.000Z","color":"red","_id":"jmorrqY0rtXyzL6U"}
+{"todo":"COMP-248 Exam","deadline":"2019-10-16T18:00:00.000Z","color":"#008000","_id":"ndN4aW7W756r0JeY"}
+{"todo":"COMP-232 Exam","deadline":"2019-10-22T17:15:00.000Z","color":"#008000","_id":"wCR6huduJEMjgScu"}
+{"todo":"ECON-203 Exam","deadline":"2019-10-22T18:45:00.000Z","color":"#008000","_id":"GxWj3mqPOHUX3aP2"}
+{"todo":"ENGR-213 EXAM","deadline":"2019-10-25T21:45:00.000Z","color":"#008000","_id":"WuyxY1a1ZxGFZFPc"}
+{"todo":"ENGR-213 QUIZ","deadline":"2019-10-18T21:45:00.000Z","color":"#ff0000","_id":"8jbG28dLdmZIHp7X"}
