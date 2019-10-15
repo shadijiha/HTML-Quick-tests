@@ -63,9 +63,9 @@
              
             // Add colors to show emergency
             if ( Math.abs(timeLeft) < 6 * 60 * 60 * 1000) {
-                style = "background-color: rgba(255, 0, 0, .4); color: white; font-weight: bold;";
+                style = "background-color: red; color: white; font-weight: bold;";
             } else if ( Math.abs(timeLeft) < 12 * 60 * 60 * 1000)    {
-                style = "background-color: yellow;"
+                style = "background-color: orange;"
             }
 
             str += "<tr>";
@@ -137,25 +137,6 @@
             getData();
         }		
 
-    }
-
-    async function updateToDo(id)   {
-
-		const data = {id: id};
-		
-		const options = {
-			method: 'POST',
-			headers: {
-				"Content-type": "application/json"
-			},
-			body: JSON.stringify(data)
-		};
-			
-		const response = await fetch('/updateTodo', options);
-        
-        for (let i = 0; i < 10; i++)    {
-            getData();
-        }	
     }
 
     getData();
