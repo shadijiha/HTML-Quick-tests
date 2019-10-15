@@ -5,20 +5,21 @@
  */
 
 const express = require('express');
-const app = express();
+const server = express();
 const port = 3000;
 const path = require('path');
 const Datastore = require('nedb');
 const fetch = require('node-fetch');
+const {app, BrowserWindow, Menu, autoUpdater, dialog} = require('electron');
 
-app.listen(port, () =>	console.log("Server is listening at " + port));	
-app.use(express.static(__dirname + '/'));
-app.use(express.json({limit: '900mb'}));
+server.listen(port, () =>	console.log("Server is listening at " + port));	
+server.use(express.static(__dirname + '/'));
+server.use(express.json({limit: '900mb'}));
 
 const db = new Datastore('toDo.db');
 db.loadDatabase();
 
-app.get('/readDB', (request, response) =>   {
+server.get('/readDB', (request, response) =>   {
 
     var data;
 
@@ -53,7 +54,7 @@ app.get('/readDB', (request, response) =>   {
   
 });
 
-app.post('/addTodo', (request, response) =>	{
+server.post('/addTodo', (request, response) =>	{
 		
     const data = request.body;
     //data.date = new Date().getTime();
@@ -66,7 +67,7 @@ app.post('/addTodo', (request, response) =>	{
     
 });
 
-app.post('/deleteTodo', (request, response) =>{
+server.post('/deleteTodo', (request, response) =>{
 
     const data = request.body;
     const id = data.id;
@@ -86,6 +87,89 @@ app.post('/deleteTodo', (request, response) =>{
     //db.persistence.compactDatafile();
 
 });
+
+
+	// Set up the window for electro
+	let win;
+
+	function createWindow()	{
+
+		win = new BrowserWindow({width: 1000, height: 800, frame: true});
+
+		/*win.loadURL(url.format({
+			pathname: "http://localhost:3000",
+			protocol: 'file:',
+			slashes: true
+		}));*/
+
+		win.loadURL("http://localhost:3000/");
+
+		//win.webContents.openDevTools();
+
+		win.on('closed', () =>	{
+			win = null;
+		});
+
+		var menu = Menu.buildFromTemplate([
+			{
+				label: 'File',
+				submenu: [
+					{
+						label: "Refresh program",
+						click()	{
+							win.reload();
+						}
+					},
+					{
+						label: "Open in navigator",
+						click()	{
+							shell.openExternal('http://localhost:3000/');
+						}
+					},
+					{type: "separator"},
+					{
+						label: 'Exit',
+						click()	{
+							app.quit();
+						}
+					}
+				]
+			},
+			{
+				label: 'Help',
+				submenu: [
+					{
+						label: 'Open developper tool',
+						enabled: true,
+						click()	{
+							win.webContents.openDevTools()
+						}
+					},
+					{type: "separator"},
+					{label: 'About', enabled: false}
+				]
+			}
+		]);
+
+		Menu.setApplicationMenu(menu);
+
+	}
+
+	app.on('ready', createWindow);
+	app.on('window-all-closed', () =>{
+		if (process.platform !== 'darwin')	{
+			app.quit();
+		}
+	});
+	app.on('activate', () =>	{
+		if (win === null)	{
+			createWindow();
+		}
+	});
+	app.on('certificate-error', function(event, webContents, url, error, certificate, callback) {
+		event.preventDefault();
+		callback(true);
+	});
 
 
 
