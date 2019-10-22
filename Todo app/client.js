@@ -35,7 +35,7 @@
 
     function displayData(data)  {
 
-        const BODY = document.getElementById("toDo_display");
+        const BODY = document.getElementById("data_display");
 
         var str = `<table class="formated_table">
             <tr class="first_row">
@@ -139,8 +139,27 @@
 
     }
 
+    function displayCalendar()  {
+
+        var str = `<table>`;
+
+        for (let i = 1; i <= 4; i++) {
+            str += `<tr>`;
+            for (let j = 1; j <= 7; j++) {
+                str += `<td style="width: 50px; height: 50px;">${i * j}</td>`;
+            }
+            str += `</tr>`;
+        }
+
+        str += `</table>`;
+
+        document.getElementById("data_display").innerHTML = str;
+    }
+
     getData();
 
     setInterval(function()  {
         displayData(toDoList);
     }, 1000);
+
+    //displayCalendar();

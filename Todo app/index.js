@@ -12,6 +12,10 @@ const Datastore = require('nedb');
 const fetch = require('node-fetch');
 const {app, BrowserWindow, Menu, autoUpdater, dialog} = require('electron');
 
+// TURN ON OR OFF DEBUG MODE
+const DEBUG = false;
+
+// set up server
 server.listen(port, () =>	console.log("Server is listening at " + port));	
 server.use(express.static(__dirname + '/'));
 server.use(express.json({limit: '900mb'}));
@@ -122,6 +126,7 @@ server.post('/deleteTodo', (request, response) =>{
 					},
 					{
 						label: "Open in navigator",
+						enabled: DEBUG,
 						click()	{
 							shell.openExternal('http://localhost:3000/');
 						}
@@ -136,11 +141,29 @@ server.post('/deleteTodo', (request, response) =>{
 				]
 			},
 			{
+				label: 'View',
+				submenu: [
+					{
+						label: "Scale",
+						submenu: [
+							{
+								label: "Zoom in",
+								enabled: DEBUG
+							},
+							{
+								label: "Zoom out",
+								enabled: DEBUG
+							}
+						]
+					}
+				]
+			},
+			{
 				label: 'Help',
 				submenu: [
 					{
 						label: 'Open developper tool',
-						enabled: true,
+						enabled: DEBUG,
 						click()	{
 							win.webContents.openDevTools()
 						}

@@ -11,6 +11,9 @@
 	let lastClickedHudShow = player;
 	let reward = 300;
 
+	const WSCALE = 1;
+	const HSCALE = 0.98;
+
 	function globalLevelUp()	{
 		level++;											// Increasing level
 		player.gold += floor(reward * 3.333334);				// Adding gold to the player after wining level
@@ -36,8 +39,12 @@
 					
 		//chat(`<br /><br />${shadoName} has reached level ${level} POGGERS`);				// Chatting
 	}
+
+	c.scale(WSCALE, HSCALE);
 	
 	function render()	{
+
+		
 	
 		// Drawing world
 		ground.draw();
