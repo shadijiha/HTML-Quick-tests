@@ -62,24 +62,21 @@
             var style = "";
              
             // Add colors to show emergency
-            if ( Math.abs(timeLeft) < 6 * 60 * 60 * 1000) {
+            if ( timeLeft < 6 * 60 * 60 * 1000) {
                 style = "background-color: red; color: white; font-weight: bold;";
-            } else if ( Math.abs(timeLeft) < 12 * 60 * 60 * 1000)    {
+            } else if ( timeLeft < 12 * 60 * 60 * 1000)    {
                 style = "background-color: orange;"
             }
 
-            str += "<tr>";
-            
-            str += `<td><div class="round" style="background-color: ${data[i].color}; color: ${data[i].color};">.</div></td>
-                    <td>${data[i].todo}</td>
-                    <td style="text-align: center;">${new Date(data[i].deadline).toLocaleString()}</td>
-                    <td style="${style} text-align: center;" id="${data[i]._id}_td">${dateString}</td>
-                    <td style="text-align: center;">
-                        <img src="delete-trash-pngrepo-com.png" OnClick="deleteToDo('${data[i]._id}')" height="25"/>
-                    </td>`
-
-            str += "</tr>";
-
+            str += `<tr>
+                        <td><div class="round" style="background-color: ${data[i].color}; color: ${data[i].color};">.</div></td>
+                        <td>${data[i].todo}</td>
+                        <td style="text-align: center;">${new Date(data[i].deadline).toLocaleString()}</td>
+                        <td style="${style} text-align: center;" id="${data[i]._id}_td">${dateString}</td>
+                        <td style="text-align: center;">
+                            <img src="delete-trash-pngrepo-com.png" OnClick="deleteToDo('${data[i]._id}')" height="25"/>
+                        </td>
+                    </tr>`;
         }
 
         str += "</table>";
@@ -154,6 +151,21 @@
         str += `</table>`;
 
         document.getElementById("data_display").innerHTML = str;
+    }
+
+    function blink(id, color)    {
+
+        if (document.getElementById(id) == undefined)   {
+            return;
+        }
+        
+        const DIV = document.getElementById(id);
+
+        if (DIV.style.backgroundColor == color)  {
+            DIV.style.backgroundColor = "transparent";
+        } else  {
+            DIV.style.backgroundColor = color;
+        }
     }
 
     getData();
