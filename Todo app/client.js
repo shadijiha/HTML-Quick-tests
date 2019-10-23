@@ -35,7 +35,7 @@
 
     function displayData(data)  {
 
-        const BODY = document.getElementById("toDo_display");
+        const BODY = document.getElementById("data_display");
 
         var str = `<table class="formated_table">
             <tr class="first_row">
@@ -62,24 +62,21 @@
             var style = "";
              
             // Add colors to show emergency
-            if ( Math.abs(timeLeft) < 6 * 60 * 60 * 1000) {
+            if ( timeLeft < 6 * 60 * 60 * 1000) {
                 style = "background-color: red; color: white; font-weight: bold;";
-            } else if ( Math.abs(timeLeft) < 12 * 60 * 60 * 1000)    {
+            } else if ( timeLeft < 12 * 60 * 60 * 1000)    {
                 style = "background-color: orange;"
             }
 
-            str += "<tr>";
-            
-            str += `<td><div class="round" style="background-color: ${data[i].color}; color: ${data[i].color};">.</div></td>
-                    <td>${data[i].todo}</td>
-                    <td style="text-align: center;">${new Date(data[i].deadline).toLocaleString()}</td>
-                    <td style="${style} text-align: center;" id="${data[i]._id}_td">${dateString}</td>
-                    <td style="text-align: center;">
-                        <img src="delete-trash-pngrepo-com.png" OnClick="deleteToDo('${data[i]._id}')" height="25"/>
-                    </td>`
-
-            str += "</tr>";
-
+            str += `<tr>
+                        <td><div class="round" style="background-color: ${data[i].color}; color: ${data[i].color};">.</div></td>
+                        <td>${data[i].todo}</td>
+                        <td style="text-align: center;">${new Date(data[i].deadline).toLocaleString()}</td>
+                        <td style="${style} text-align: center;" id="${data[i]._id}_td">${dateString}</td>
+                        <td style="text-align: center;">
+                            <img src="delete-trash-pngrepo-com.png" OnClick="deleteToDo('${data[i]._id}')" height="25"/>
+                        </td>
+                    </tr>`;
         }
 
         str += "</table>";
@@ -139,8 +136,42 @@
 
     }
 
+    function displayCalendar()  {
+
+        var str = `<table>`;
+
+        for (let i = 1; i <= 4; i++) {
+            str += `<tr>`;
+            for (let j = 1; j <= 7; j++) {
+                str += `<td style="width: 50px; height: 50px;">${i * j}</td>`;
+            }
+            str += `</tr>`;
+        }
+
+        str += `</table>`;
+
+        document.getElementById("data_display").innerHTML = str;
+    }
+
+    function blink(id, color)    {
+
+        if (document.getElementById(id) == undefined)   {
+            return;
+        }
+        
+        const DIV = document.getElementById(id);
+
+        if (DIV.style.backgroundColor == color)  {
+            DIV.style.backgroundColor = "transparent";
+        } else  {
+            DIV.style.backgroundColor = color;
+        }
+    }
+
     getData();
 
     setInterval(function()  {
         displayData(toDoList);
     }, 1000);
+
+    //displayCalendar();

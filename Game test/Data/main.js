@@ -22,9 +22,9 @@
 	let worldElements = [];
 	
 	let world = {
-		width: scaleW(5200),
+		width: 5200,
 		height: canvas.height,
-		level: scaleH(700),
+		level: 700,
 		virtualPosition: 0
 	};
 		

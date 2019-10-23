@@ -41,6 +41,8 @@
 			pingMode = false;
 		} else if (event.keyCode == 82)	{
 			player.ult();
+		} else if (event.keyCode == 'b'.charCodeAt(0) || event.keyCode == 'B'.charCodeAt(0))	{
+			allWindows[allWindows.indexOf(itemsMenuWindow)].open();
 		}
 	}
 	
