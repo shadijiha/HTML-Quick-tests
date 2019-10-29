@@ -4,12 +4,15 @@
         <title>To do app</title>
     </head>
     <body>
-        <h1 class="add" style="margin-top: 3%;">Todo app:</h1>
+        <div id="add_button" OnClick="displayAdd();">
+            +
+        </div>
         <div id="data_display">
         </div>
         <br />
         <br />
-        <div class="add">
+        <div class="add" id="add_panel" style="display: none;">
+            <div id="add_panel_close_button" OnClick="document.getElementById('add_panel').style.display = 'none';">X</div>
             <h2>Add new toDo</h2>
             <table>
                 <tr>
