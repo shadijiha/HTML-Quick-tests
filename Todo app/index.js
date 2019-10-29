@@ -13,7 +13,7 @@ const fetch = require('node-fetch');
 const {app, BrowserWindow, Menu, autoUpdater, dialog} = require('electron');
 
 // TURN ON OR OFF DEBUG MODE
-const DEBUG = false;
+const DEBUG = true;
 
 // set up server
 server.listen(port, () =>	console.log("Server is listening at " + port));	
