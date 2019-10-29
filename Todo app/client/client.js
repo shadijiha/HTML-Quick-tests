@@ -175,3 +175,11 @@
     }, 1000);
 
     //displayCalendar();
+
+    function displayAdd()   {
+
+        const DIV = document.getElementById("add_panel");
+
+        DIV.style.display = "block";
+
+    }

@@ -26,7 +26,7 @@ td img {
     background: white;
     border-radius: 10px;
     overflow: hidden;
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
     position: relative;
     left: 30;
@@ -78,16 +78,41 @@ input[type=button]:hover    {
 
 .add    {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 20%;
-    max-width: 20%;
-    background: #36304a;
+    top: 15%;
+    left: 25%;
+    width: 50%;
+    max-width: 700px;
+    background: rgba(0,0,0,0.8);
     overflow: hidden;
     color: white;
     padding: 10px;
+    border-radius: 10px;
 }
 
 .add table tr td    {
     color: white;
+}
+
+#add_button {
+    background: #36304a;
+    color: white;
+    font-size: .5in;
+    text-align: center;
+    position: sticky;
+    top: 80%;
+    left: 80%;
+    width: 70px;
+    z-index: +1;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+#add_panel_close_button {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    border-radius: 50px;
+    width: 25px;
+    text-align: center;
+    cursor: pointer;
 }

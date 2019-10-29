@@ -1,0 +1,198 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <title>Complex calculator</title>
+        <!--<script src="complexNumbers.js"></script>-->
+    </head>
+    <body style="margin: 15px;">
+        <h1>Complex numbers calculator</h1>
+        <p>
+            Mode:
+            <select onchange="changeMode(this.value);">
+                <option value="dev">Developer</option>
+                <option value="non_dev">Non developer</option>
+            </select>
+        </p>
+        <div id="non_dev" style="display: none;">
+            <table id="complex_numbers_display">
+                <tr>
+                    <td><i>z1</i></td>
+                    <td>
+                        <input type="number" id="z1_a" /> +
+                    </td>
+                    <td>
+                        <input type="number" id="z1_b" /><i>i</i>
+                    </td>
+                </tr>
+            </table>
+            <a href="#" onclick="addSlot();">Add a number</a>
+            <a href="complex.html">Refresh</a>
+            <br />
+            <br />
+            <textarea style="width: 70%; height: 100px;" placeholder="Enter an operation. e.g.: z1+z2" onkeyup="parse(this.value);"></textarea>
+        </div>
+        <div id="dev">
+                <textarea style="width: 70%; height: 300px;" placeholder="Enter a JS code..." onkeyup="render(this.innerHTML);"></textarea>
+                <br />
+                <div id="console">
+                    Result
+                </div>
+        </div>
+<script>
+let totalSlots = 1;
+class Complex   {
+
+    constructor(a, b)   {
+
+        this.a = a || 0.0;
+        this.b = b || 0.0;
+        this.phi = Math.atan(b / a);
+        this.r = Math.sqrt(a * a + b * b);
+
+    }
+
+    fromPolar(r, phi)   {
+
+        this.phi = phi;
+        this.r = r;    
+        this.a = r * Math.cos(this.phi);
+        this.b = r * Math.sin(this.phi);   
+
+    }
+
+    equals(complexNum)  {
+        if (this.a == complexNum.a && this.b == complexNum.b)   {
+            return true;            
+        } else  {
+            return false;
+        }
+    }
+
+    render(arg)    {
+        if (arg.toLowerCase() == "polar")   {
+            return `${this.r} * ( cos(${this.phi}) + i sin(${this.phi}) )`;            
+        } else  {
+            return `${this.a} + ${this.b} i`;            
+        }        
+    }
+
+    sum(numB)   {
+        return new Complex(this.a + numB.a, this.b + numB.b);
+    }
+
+    substract(numB) {
+        return new Complex(this.a - numB.a, this.b - numB.b);
+    }
+
+    multiply(numB)  {
+        var result = new Complex();
+        result.fromPolar(this.r * numB.r, this.phi + numB.phi);
+
+        return result;
+    } 
+
+    divide(numB)    {
+        var result = new Complex();
+        result.fromPolar(this.r / numB.r, this.phi - numB.phi);
+
+        return result;       
+    }
+
+    conjugate() {
+        return new Complex(this.a, -1 * this.b);
+    }
+
+    power(exposant) {
+        var result = new Complex();
+        result.fromPolar( Math.pow(this.r, exposant) , this.phi * exposant);
+
+        return result;     
+    }
+
+    root(degree)    {
+        var result = [];
+        var tempR = pow(r, 1 / degree);
+
+        for (var i = 0; i < degree; i++) {			
+            var tempPhi = (this.phi + 2 * PI * i) / degree;			
+            var temp = new Complex();
+            temp.fromPolar(tempR, tempPhi);
+
+            result.push(temp);
+        }
+
+        return result;
+    }
+
+    renderRoot(degree)    {
+        var roots = this.root(degree);
+        var str = "";
+
+        for (let root of roots) {
+            str += root.render();
+            str += '\n';
+        }
+
+        return str;
+    }
+
+    realPart()    {
+        return this.a;
+    }
+
+    imaginaryPart()    {
+        return this.b;
+    }
+
+    mag()   {
+        return this.r;
+    }
+
+    abs()   {
+        this.mag();
+    }
+}
+
+function changeMode(val)    {
+    if (val == "dev")   {
+        document.getElementById("dev").style.display = "block";
+        document.getElementById("non_dev").style.display = "none";
+    } else  {
+        document.getElementById("dev").style.display = "none";
+        document.getElementById("non_dev").style.display = "block"; 
+    }
+}
+
+function addSlot()  {
+
+    totalSlots++;
+
+    const TABLE = document.getElementById("complex_numbers_display");
+
+    TABLE.innerHTML += `
+                <tr>
+                    <td><i>z${totalSlots}</i></td>
+                    <td>
+                        <input type="number" id="z${totalSlots}_a" /> +
+                    </td>
+                    <td>
+                        <input type="number" id="z${totalSlots}_b" /><i>i</i>
+                    </td>
+                </tr>   
+    `;    
+}
+
+function parse()    {
+
+    let numbers = [];
+
+}
+
+function render(value) {
+    let x = eval(value);
+    document.getElementById("console").innerHTML = x;
+}
+
+</script>
+    </body>
+</html>

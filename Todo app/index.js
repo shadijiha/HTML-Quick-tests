@@ -13,14 +13,14 @@ const fetch = require('node-fetch');
 const {app, BrowserWindow, Menu, autoUpdater, dialog} = require('electron');
 
 // TURN ON OR OFF DEBUG MODE
-const DEBUG = false;
+const DEBUG = true;
 
 // set up server
 server.listen(port, () =>	console.log("Server is listening at " + port));	
-server.use(express.static(__dirname + '/'));
+server.use(express.static(__dirname + '/client/'));
 server.use(express.json({limit: '900mb'}));
 
-const db = new Datastore('toDo.db');
+const db = new Datastore('databases/toDo.db');
 db.loadDatabase();
 
 server.get('/readDB', (request, response) =>   {
@@ -98,7 +98,7 @@ server.post('/deleteTodo', (request, response) =>{
 
 	function createWindow()	{
 
-		win = new BrowserWindow({width: 1000, height: 800, frame: true});
+		win = new BrowserWindow({width: 950, height: 600, frame: true});
 
 		/*win.loadURL(url.format({
 			pathname: "http://localhost:3000",

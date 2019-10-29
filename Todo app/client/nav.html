@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <title>To do app</title>
+<style>
+    body    {
+        color: white;
+    }
+    #nav_ul div    {
+        padding: 15px;
+        cursor: pointer;
+        transition: background-color 1s, padding-left 1s;
+    }
+    #nav_ul div:hover    {
+        background-color: rgba(0, 0, 0, .5);
+        padding-left: 25px;
+    }
+</style>
+<script>
+function changePage(url, target)    {
+
+    target = target || "main";
+
+    let id = Math.floor(Math.random()* 100000);
+    document.querySelector("body").innerHTML += `<a href="${url}" id="${id}" target="${target}" style="display: none;">random text</a>`;
+    document.getElementById(id).click();
+
+}
+</script>
+    </head>
+    <body style="background: #36304a;">
+        <h1 style="padding: 10px;">Navigate</h1>
+        <div id="nav_ul">
+            <div Onclick="changePage('todo.html');">Todo list</div>
+            <div Onclick="changePage('https://www.desmos.com/scientific', '_blank')">Scientific calculator</div>
+            <div Onclick="changePage('complex.html', 'main')">Complex numbers calculator</div>
+            <div Onclick="changePage('https://www.desmos.com/calculator', '_blank')">Graph ploter</div>
+            <div Onclick="changePage('https://derivative-calculator.net', '_blank')">Derivative calculator</div>
+            <div Onclick="changePage('https://integral-calculator.com', '_blank')">Integral calculator</div>
+            <div Onclick="changePage('https://www.google.ca', '_blank')">Google</div>
+        </div>
+    </body>
+</html>
