@@ -3,43 +3,81 @@
         <link rel="stylesheet" type="text/css" href="styles.css">
         <title>Complex calculator</title>
         <!--<script src="complexNumbers.js"></script>-->
+<style>
+    input[type=number]  {
+        width: 50px;
+        font-size: 16px;
+        border-radius: 5px;
+        padding: 5px;
+    }
+</style>
     </head>
     <body style="margin: 15px;">
         <h1>Complex numbers calculator</h1>
         <p>
             Mode:
             <select onchange="changeMode(this.value);">
-                <option value="dev">Developer</option>
                 <option value="non_dev">Non developer</option>
+                <option value="dev">Developer</option>                
             </select>
         </p>
         <div id="non_dev" style="display: none;">
-            <table id="complex_numbers_display">
-                <tr>
-                    <td><i>z1</i></td>
-                    <td>
-                        <input type="number" id="z1_a" /> +
-                    </td>
-                    <td>
-                        <input type="number" id="z1_b" /><i>i</i>
-                    </td>
-                </tr>
+            <table>
+                <tbody id="complex_numbers_display">
+                </tbody>
             </table>
             <a href="#" onclick="addSlot();">Add a number</a>
             <a href="complex.html">Refresh</a>
             <br />
             <br />
-            <textarea style="width: 70%; height: 100px;" placeholder="Enter an operation. e.g.: z1+z2" onkeyup="parse(this.value);"></textarea>
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th rowspan="2">Number</th>
+                            <th rowspan="2">Operation</th>
+                            <th rowspan="2">Number</th>
+                            <th colspan="2">result</th>
+                        </tr>
+                        <tr>
+                            <th>Cartesien</th>
+                            <th>Polar</th>
+                        </tr>
+                        <tr>
+                            <td id="all_number_td"></td>
+                            <td>
+                                <select id="operation_type" onchange="detectPowerOrRoot(this.value);">
+                                    <option value="add">+</option>
+                                    <option value="sub">-</option>
+                                    <option value="mult">*</option>
+                                    <option value="divide">/</option>
+                                    <option value="power">power</option>
+                                    <option value="root">root</option>
+                                </select>
+                            </td>
+                            <td id="all_number_secondary_td"></td>
+                            <td id="operation_result">
+                                <input type="button" value="go" onclick="applyOperation(document.getElementById('operation_type').value);" />
+                            </td>
+                            <td id="operation_result_polar">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div id="dev">
-                <textarea style="width: 70%; height: 300px;" placeholder="Enter a JS code..." onkeyup="render(this.innerHTML);"></textarea>
+                <textarea style="width: 70%; height: 300px;" placeholder="Enter a JS code..." onkeyup=""></textarea>
                 <br />
                 <div id="console">
                     Result
                 </div>
         </div>
 <script>
-let totalSlots = 1;
+let totalSlots = 0;
+let totalNumbers = 0;
+let allNumbers = [];
+
 class Complex   {
 
     constructor(a, b)   {
@@ -69,10 +107,10 @@ class Complex   {
     }
 
     render(arg)    {
-        if (arg.toLowerCase() == "polar")   {
-            return `${this.r} * ( cos(${this.phi}) + i sin(${this.phi}) )`;            
+        if (arg != undefined && arg.toLowerCase() == "polar")   {
+            return `${this.r.toFixed(3)} * ( cos(${this.phi.toFixed(4)}) + i sin(${this.phi.toFixed(4)}) )`;            
         } else  {
-            return `${this.a} + ${this.b} i`;            
+            return `${this.a.toFixed(3)} + ${this.b.toFixed(3)} i`;            
         }        
     }
 
@@ -111,10 +149,10 @@ class Complex   {
 
     root(degree)    {
         var result = [];
-        var tempR = pow(r, 1 / degree);
+        var tempR = Math.pow(this.r, 1 / degree);
 
         for (var i = 0; i < degree; i++) {			
-            var tempPhi = (this.phi + 2 * PI * i) / degree;			
+            var tempPhi = (this.phi + 2 * Math.PI * i) / degree;			
             var temp = new Complex();
             temp.fromPolar(tempR, tempPhi);
 
@@ -124,13 +162,13 @@ class Complex   {
         return result;
     }
 
-    renderRoot(degree)    {
+    renderRoot(degree, type)    {
         var roots = this.root(degree);
         var str = "";
 
         for (let root of roots) {
-            str += root.render();
-            str += '\n';
+            str += root.render(type);
+            str += '<br />';
         }
 
         return str;
@@ -163,35 +201,224 @@ function changeMode(val)    {
     }
 }
 
-function addSlot()  {
+function addSlot(type)  {
 
     totalSlots++;
+    totalNumbers++;
 
     const TABLE = document.getElementById("complex_numbers_display");
 
-    TABLE.innerHTML += `
-                <tr>
+    if (type == undefined || type.toLowerCase() == "cartesien") {
+
+        TABLE.innerHTML += `
+                <tr id="z${totalSlots}">
                     <td><i>z${totalSlots}</i></td>
                     <td>
-                        <input type="number" id="z${totalSlots}_a" /> +
+                        <input placeholder="a" type="number" id="z${totalSlots}_a" /> +
                     </td>
                     <td>
-                        <input type="number" id="z${totalSlots}_b" /><i>i</i>
+                        <input placeholder="b" type="number" id="z${totalSlots}_b" /><i>i</i>
+                    </td>
+                    <td>
+                        <select onchange="switchInputMode(this.value, ${totalSlots})">
+                            <option value="cartesien">From cartesien</option>
+                            <option value="polar">From polar</option>
+                        </select>
                     </td>
                 </tr>   
-    `;    
+        `; 
+    } else if (type.toLowerCase() == "polar")   {
+
+        TABLE.innerHTML += `
+                <tr id="z${totalSlots}">
+                    <td><i>z${totalSlots}</i></td>
+                    <td>
+                        <input type="number" id="z${totalSlots}_r" placeholder="r" /> *
+                    </td>
+                    <td>
+                        ( cos(<input placeholder="θ" type="number" id="z${totalSlots}_phi" onkeyup="document.getElementById('z${totalSlots}_sin_auto').innerHTML = this.value;" />) + <i>i</i> sin(<span id="z${totalSlots}_sin_auto"></span>) )
+                    </td>
+                    <td>
+                        <select onchange="switchInputMode(this.value, ${totalSlots})">
+                            <option value="polar">From polar</option>
+                            <option value="cartesien">From cartesien</option>
+                        </select>
+                    </td>
+                </tr>   
+        `;
+    }   
+
+    allNumbers.push(`z${totalSlots}`);
+    refreshSelectMenus();
 }
 
-function parse()    {
+addSlot();
 
-    let numbers = [];
+function removeSlot(number)   {
+
+    document.getElementById("z" + number).remove();
+    allNumbers.splice(allNumbers.indexOf(`z${number}`), 1);
+    totalNumbers--;
+}
+
+function switchInputMode(type, number)  {
+    removeSlot(number);
+    addSlot(type);
+}
+
+function refreshSelectMenus()   {
+    displayAllNumbers("all_number_td");
+    displayAllNumbers("all_number_secondary_td");
+}
+
+function displayAllNumbers(id)    {
+
+    const DOMELEMENT = document.getElementById(id);
+
+    str = `<select id="${id}_select">`;
+
+    for (let i = 0; i < allNumbers.length; i++)    {
+        str += `<option value="${allNumbers[i]}">${allNumbers[i]}</option>`;        
+    }
+    str += `</select>`;
+    DOMELEMENT.innerHTML = str;
+}
+
+function detectPowerOrRoot(val) {
+    if (val == "power" || val == "root") {
+        document.getElementById("all_number_secondary_td").innerHTML = `<input type="number" id="all_number_secondary_td_input">`;
+    }
+}
+
+function applyOperation(opp)    {
+    switch(opp) {
+        case "add":
+            sum();
+            break;
+        case "sub":
+            substract();
+            break;
+        case "mult":
+            multiply();
+            break;
+        case "divide":
+            divide();
+            break;
+        case "power":
+            power();
+            break;
+        case "root":
+            complexRoot();
+            break;
+    }
+}
+
+function parseNum(numString)    {
+
+    if (document.getElementById(numString + "_a"))  {
+        // Number exists in Cartesien form
+        let a = document.getElementById(numString + "_a").value;
+        let b = document.getElementById(numString + "_b").value;
+
+        return new Complex(Number(a), Number(b));
+    } else  {
+        // Number exists in polar form
+        let r = document.getElementById(numString + "_r").value;
+        let phi = document.getElementById(numString + "_phi").value;
+
+        const temp = new Complex();
+        temp.fromPolar(Number(r), Number(phi));
+
+        return temp;        
+    }
+}
+
+function sum()  {
+    const STRING1 = document.getElementById("all_number_td_select").value;
+    const STRING2 = document.getElementById("all_number_secondary_td_select").value;
+
+    const NUM1 = allNumbers[allNumbers.indexOf(STRING1)];
+    const NUM2 = allNumbers[allNumbers.indexOf(STRING2)];
+
+    const OBJ1 = parseNum(NUM1);
+    const OBJ2 = parseNum(NUM2);
+
+    document.getElementById("operation_result").innerHTML = OBJ1.sum(OBJ2).render();
+    document.getElementById("operation_result_polar").innerHTML = OBJ1.sum(OBJ2).render("polar");
 
 }
 
-function render(value) {
-    let x = eval(value);
-    document.getElementById("console").innerHTML = x;
+function substract()  {
+    const STRING1 = document.getElementById("all_number_td_select").value;
+    const STRING2 = document.getElementById("all_number_secondary_td_select").value;
+
+    const NUM1 = allNumbers[allNumbers.indexOf(STRING1)];
+    const NUM2 = allNumbers[allNumbers.indexOf(STRING2)];
+
+    const OBJ1 = parseNum(NUM1);
+    const OBJ2 = parseNum(NUM2);
+
+    document.getElementById("operation_result").innerHTML = OBJ1.substract(OBJ2).render();
+    document.getElementById("operation_result_polar").innerHTML = OBJ1.substract(OBJ2).render("polar");
+
 }
+
+function multiply()  {
+    const STRING1 = document.getElementById("all_number_td_select").value;
+    const STRING2 = document.getElementById("all_number_secondary_td_select").value;
+
+    const NUM1 = allNumbers[allNumbers.indexOf(STRING1)];
+    const NUM2 = allNumbers[allNumbers.indexOf(STRING2)];
+
+    const OBJ1 = parseNum(NUM1);
+    const OBJ2 = parseNum(NUM2);
+
+    document.getElementById("operation_result").innerHTML = OBJ1.multiply(OBJ2).render();
+    document.getElementById("operation_result_polar").innerHTML = OBJ1.multiply(OBJ2).render("polar");
+
+}
+
+function divide()   {
+    const STRING1 = document.getElementById("all_number_td_select").value;
+    const STRING2 = document.getElementById("all_number_secondary_td_select").value;
+
+    const NUM1 = allNumbers[allNumbers.indexOf(STRING1)];
+    const NUM2 = allNumbers[allNumbers.indexOf(STRING2)];
+
+    const OBJ1 = parseNum(NUM1);
+    const OBJ2 = parseNum(NUM2);
+
+    document.getElementById("operation_result").innerHTML = OBJ1.divide(OBJ2).render();
+    document.getElementById("operation_result_polar").innerHTML = OBJ1.divide(OBJ2).render("polar");
+}
+
+function power()   {
+    const STRING1 = document.getElementById("all_number_td_select").value;
+    const STRING2 = document.getElementById("all_number_secondary_td_input").value;
+
+    const NUM1 = allNumbers[allNumbers.indexOf(STRING1)];
+    const NUM2 = Number(STRING2);
+
+    const OBJ1 = parseNum(NUM1);
+
+    document.getElementById("operation_result").innerHTML = OBJ1.power(NUM2).render();
+    document.getElementById("operation_result_polar").innerHTML = OBJ1.power(NUM2).render("polar");
+}
+
+function complexRoot()   {
+    const STRING1 = document.getElementById("all_number_td_select").value;
+    const STRING2 = document.getElementById("all_number_secondary_td_input").value;
+
+    const NUM1 = allNumbers[allNumbers.indexOf(STRING1)];
+    const NUM2 = Number(STRING2);
+
+    const OBJ1 = parseNum(NUM1);
+
+    document.getElementById("operation_result").innerHTML = OBJ1.renderRoot(NUM2);
+    document.getElementById("operation_result_polar").innerHTML = OBJ1.renderRoot(NUM2, "polar");
+}
+
+changeMode("non_dev");
 
 </script>
     </body>
