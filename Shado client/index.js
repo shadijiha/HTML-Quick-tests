@@ -10,7 +10,7 @@ const port = 3000;
 const path = require('path');
 const Datastore = require('nedb');
 const fetch = require('node-fetch');
-const {app, BrowserWindow, Menu, autoUpdater, dialog} = require('electron');
+const {app, BrowserWindow, Menu, autoUpdater, dialog, ipcMain} = require('electron');
 
 // TURN ON OR OFF DEBUG MODE
 const DEBUG = true;
@@ -112,6 +112,7 @@ server.post('/deleteTodo', (request, response) =>{
 
 		win.on('closed', () =>	{
 			win = null;
+			app.quit();
 		});
 
 		var menu = Menu.buildFromTemplate([
@@ -192,6 +193,9 @@ server.post('/deleteTodo', (request, response) =>{
 	app.on('certificate-error', function(event, webContents, url, error, certificate, callback) {
 		event.preventDefault();
 		callback(true);
+	});
+	ipcMain.on('command:close', (event, arg) => {
+		app.quit();
 	});
 
 

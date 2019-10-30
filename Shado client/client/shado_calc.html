@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <title>To do app</title>
+<style>
+    input[type=number]  {
+        width: 50px;
+        font-size: 16px;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    .big    {
+        font-size: 20px;
+    }
+</style>
+<script src="shado_JS_framework.js"></script>
+    </head>
+    <body>
+        <div id="nav">
+            <h1 style="padding: 10px;">Navigate</h1>
+            <div id="nav_ul">
+                <div Onclick="changePage('index.html');">Todo list</div>
+                <div Onclick="changePage('https://www.desmos.com/scientific', '_blank')">Scientific calculator</div>
+                <div Onclick="changePage('shado_calc.html', 'main')">Shado calculator</div>
+                <div Onclick="changePage('complex.html', 'main')">Complex numbers calculator</div>
+                <div Onclick="changePage('https://www.desmos.com/calculator', '_blank')">Graph ploter</div>
+                <div Onclick="changePage('https://derivative-calculator.net', '_blank')">Derivative calculator</div>
+                <div Onclick="changePage('https://integral-calculator.com', '_blank')">Integral calculator</div>
+                <div Onclick="changePage('https://www.google.ca', '_blank')">Google</div>
+            </div>
+        </div>
+        <div class="body">
+            <h1>Shado advanced calculator</h1>
+            <select onchange="showTopic(this.value);">
+                <option value="quadratic">Second degree equation solver</option>
+                <option value="angle">Angles converter</option>
+                <option value="linear">linear equation solver</option>
+            </select>
+
+            <div class="topic" id="quadratic">
+                <i>
+                    <span id="ax2">A</span>x<sup>2</sup> +
+                    <span id="bx">B</span>x + 
+                    <span id="c">C</span>
+                </i>
+                <p>
+                    <input type="number" onkeyup="changeValue('ax2', this.value); calulateZeros();" onchange="changeValue('ax2', this.value); calulateZeros();" /><i>x<sup>2</sup></i> + 
+                    <input type="number" onkeyup="changeValue('bx', this.value); calulateZeros();" onchange="changeValue('bx', this.value); calulateZeros();" /><i>x</i> +
+                    <input type="number" onkeyup="changeValue('c', this.value); calulateZeros();" onchange="changeValue('c', this.value); calulateZeros();" />
+                </p>
+                <p>
+                    <i><b class="big">x<sub>1</sub></b><i>:
+                    <span class="big" id="x1"></span>
+                    <br />
+                    <i><b class="big">x<sub>2</sub></b></i>:
+                    <span class="big" id="x2"></span>
+                </p>
+            </div>
+        </div>
+        <script src="client.js"></script>
+<script>
+
+function showTopic(val) {
+    let allTopics = document.getElementsByClassName("topic");
+
+    for (let temp of allTopics) {
+        temp.style.display = "none";
+    }
+
+    document.getElementById(val).style.display = "block";
+}
+
+function changeValue(id, val)   {
+    document.getElementById(id).innerHTML = val;
+}
+
+function calulateZeros()    {
+
+    let a = Number(document.getElementById("ax2").textContent);
+    let b = Number(document.getElementById("bx").textContent);
+    let c = Number(document.getElementById("c").textContent);
+
+    console.log(a, b, c);
+
+    document.getElementById("x1").innerHTML = zeros(a, b, c, 0);
+    document.getElementById("x2").innerHTML = zeros(a, b, c, 1);
+}
+</script>
+    </body>
+</html>

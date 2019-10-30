@@ -3,6 +3,7 @@
  * Client side script for Shado Todo app
  */
 
+
     var toDoList = [];
 
     async function getData()    {
@@ -179,7 +180,24 @@
     function displayAdd()   {
 
         const DIV = document.getElementById("add_panel");
-
         DIV.style.display = "block";
 
+
+    }
+
+    function changePage(url, target)    {
+
+        target = target || "main";
+
+        if (target == "main")   {
+            window.location.href = url;
+        } else  {
+            //let id = Math.floor(Math.random()* 100000);
+            //document.querySelector("body").innerHTML += `<a href="${url}" id="${id}" target="${target}" style="display: none;">random text</a>`;
+           //document.getElementById(id).click();   
+           window.open(url);       
+        }
+    
+
+    
     }

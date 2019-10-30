@@ -12,67 +12,83 @@
     }
 </style>
     </head>
-    <body style="margin: 15px;">
-        <h1>Complex numbers calculator</h1>
-        <p>
-            Mode:
-            <select onchange="changeMode(this.value);">
-                <option value="non_dev">Non developer</option>
-                <option value="dev">Developer</option>                
-            </select>
-        </p>
-        <div id="non_dev" style="display: none;">
-            <table>
-                <tbody id="complex_numbers_display">
-                </tbody>
-            </table>
-            <a href="#" onclick="addSlot();">Add a number</a>
-            <a href="complex.html">Refresh</a>
-            <br />
-            <br />
-            <div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th rowspan="2">Number</th>
-                            <th rowspan="2">Operation</th>
-                            <th rowspan="2">Number</th>
-                            <th colspan="2">result</th>
-                        </tr>
-                        <tr>
-                            <th>Cartesien</th>
-                            <th>Polar</th>
-                        </tr>
-                        <tr>
-                            <td id="all_number_td"></td>
-                            <td>
-                                <select id="operation_type" onchange="detectPowerOrRoot(this.value);">
-                                    <option value="add">+</option>
-                                    <option value="sub">-</option>
-                                    <option value="mult">*</option>
-                                    <option value="divide">/</option>
-                                    <option value="power">power</option>
-                                    <option value="root">root</option>
-                                </select>
-                            </td>
-                            <td id="all_number_secondary_td"></td>
-                            <td id="operation_result">
-                                <input type="button" value="go" onclick="applyOperation(document.getElementById('operation_type').value);" />
-                            </td>
-                            <td id="operation_result_polar">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+    <body>
+        <div id="nav">
+            <h1 style="padding: 10px;">Navigate</h1>
+            <div id="nav_ul">
+                <div Onclick="changePage('index.html');">Todo list</div>
+                <div Onclick="changePage('https://www.desmos.com/scientific', '_blank')">Scientific calculator</div>
+                <div Onclick="changePage('shado_calc.html', 'main')">Shado calculator</div>
+                <div Onclick="changePage('complex.html', 'main')">Complex numbers calculator</div>
+                <div Onclick="changePage('https://www.desmos.com/calculator', '_blank')">Graph ploter</div>
+                <div Onclick="changePage('https://derivative-calculator.net', '_blank')">Derivative calculator</div>
+                <div Onclick="changePage('https://integral-calculator.com', '_blank')">Integral calculator</div>
+                <div Onclick="changePage('https://www.google.ca', '_blank')">Google</div>
             </div>
         </div>
-        <div id="dev">
-                <textarea style="width: 70%; height: 300px;" placeholder="Enter a JS code..." onkeyup=""></textarea>
+        <div class="body">
+            <h1>Complex numbers calculator</h1>
+            <p>
+                Mode:
+                <select onchange="changeMode(this.value);">
+                    <option value="non_dev">Non developer</option>
+                    <option value="dev">Developer</option>                
+                </select>
+            </p>
+            <div id="non_dev" style="display: none;">
+                <table>
+                    <tbody id="complex_numbers_display">
+                    </tbody>
+                </table>
+                <a href="#" onclick="addSlot();">Add a number</a>
+                <a href="complex.html">Refresh</a>
                 <br />
-                <div id="console">
-                    Result
+                <br />
+                <div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th rowspan="2">Number</th>
+                                <th rowspan="2">Operation</th>
+                                <th rowspan="2">Number</th>
+                                <th colspan="2">result</th>
+                            </tr>
+                            <tr>
+                                <th>Cartesien</th>
+                                <th>Polar</th>
+                            </tr>
+                            <tr>
+                                <td id="all_number_td"></td>
+                                <td>
+                                    <select id="operation_type" onchange="detectPowerOrRoot(this.value);">
+                                        <option value="add">+</option>
+                                        <option value="sub">-</option>
+                                        <option value="mult">*</option>
+                                        <option value="divide">/</option>
+                                        <option value="power">power</option>
+                                        <option value="root">root</option>
+                                    </select>
+                                </td>
+                                <td id="all_number_secondary_td"></td>
+                                <td id="operation_result">
+                                    <input type="button" value="go" onclick="applyOperation(document.getElementById('operation_type').value);" />
+                                </td>
+                                <td id="operation_result_polar">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+            <div id="dev">
+                    <textarea style="width: 70%; height: 300px;" placeholder="Enter a JS code..." onkeyup=""></textarea>
+                    <br />
+                    <div id="console">
+                        Result
+                    </div>
+            </div>
         </div>
+<script src="client.js"></script>
 <script>
 let totalSlots = 0;
 let totalNumbers = 0;
