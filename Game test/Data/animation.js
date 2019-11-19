@@ -40,7 +40,7 @@
 		//chat(`<br /><br />${shadoName} has reached level ${level} POGGERS`);				// Chatting
 	}
 
-	c.scale(WSCALE, HSCALE);
+	//c.scale(WSCALE, HSCALE);
 	
 	function render()	{
 
