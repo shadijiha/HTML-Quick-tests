@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <title></title>
+    </head>
+    <body>
+        <div id="editor" class="movable">
+            <div>
+                <input type="text" id="new_element_name" placeholder="Div, p, span, ..." />
+                <input type="button" onclick="addElement(getElement('new_element_name').value);" value="Add" />
+            </div>
+        </div>
+        <div id="output" style="position: absolute; width: 100%;">
+        </div>
+        <canvas id="editor_canvas"></canvas>
+        <script src="Logger.js"></script>
+        <script src="canvas.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
