@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Serif&display=swap");
+
+body {
+}
+
+#input,
+#output {
+	width: calc(50% - 40px);
+	height: 40%;
+	font-size: 16pt;
+	font-family: "Times New Roman", Times, serif;
+	border: solid black 1px;
+	padding: 20px;
+}
